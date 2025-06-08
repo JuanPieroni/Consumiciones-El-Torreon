@@ -8,7 +8,7 @@ import HistorialPagos from "./components/HistorialPagos"
 import productosData from "./data/productos"
 import { useEffect, useState } from "react"
 
-import { Button } from "@/components/ui/button"
+ 
 
 const App = () => {
   const [personas, setPersonas] = useState(() => {
@@ -103,9 +103,9 @@ const App = () => {
         <Link to="/">Inicio</Link> | {" "}
         <Link to="/extra">Producto fuera de carta</Link> | {" "}
         <Link to="/historial">Historial</Link>
-<Button onClick={resetParcial} className="ml-4">
+<button onClick={resetParcial} className="ml-4">
   Resetear App (excepto productos)
-</Button>
+</button>
       </nav>
       <Routes>
         <Route
