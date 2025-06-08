@@ -5,7 +5,7 @@ import ListaProductos from "./components/ListaProductos"
 import ResumenConsumo from "./components/ResumenConsumo"
 import ProductoExtra from "./components/ProductoExtra"
 import HistorialPagos from "./components/HistorialPagos"
-import productosData from "./data/productos"
+import { supabase } from "./supabaseClient"
 import { useEffect, useState } from "react"
 import styles from "./App.module.css"
 
@@ -24,18 +24,23 @@ const App = () => {
         return JSON.parse(localStorage.getItem("pagos")) || []
     })
 
-    const [productos, setProductos] = useState(() => {
-        return JSON.parse(localStorage.getItem("productos")) || productosData
-    })
+    const [productos, setProductos] = useState([])
 
     const [personaSeleccionada, setPersonaSeleccionada] = useState()
 
     useEffect(() => {
-        localStorage.setItem("personas", JSON.stringify(personas))
-        localStorage.setItem("consumos", JSON.stringify(consumos))
-        localStorage.setItem("pagos", JSON.stringify(pagos))
-        localStorage.setItem("productos", JSON.stringify(productos))
-    }, [personas, consumos, pagos, productos])
+        const fetchProductos = async () => {
+            const { data, error } = await supabase.from("productos").select("*")
+
+            if (error) {
+                console.error("Error al obtener productos:", error.message)
+            } else {
+                setProductos(data)
+            }
+        }
+
+        fetchProductos()
+    }, []) // solo se ejecuta una vez al inicio
 
     const agregarPersona = (nombre) => {
         if (!personas.includes(nombre)) {
@@ -105,72 +110,86 @@ const App = () => {
     }
 
     return (
-    <Router>
-      <nav className={styles.nav}>
-        <Link className={styles["nav-link"]} to="/">Inicio</Link>
-        <Link className={styles["nav-link"]} to="/extra">Producto fuera de carta</Link>
-        <Link className={styles["nav-link"]} to="/historial">Historial</Link>
+        <Router>
+            <nav className={styles.nav}>
+                <Link className={styles["nav-link"]} to="/">
+                    Inicio
+                </Link>
+                <Link className={styles["nav-link"]} to="/extra">
+                    Producto fuera de carta
+                </Link>
+                <Link className={styles["nav-link"]} to="/historial">
+                    Historial
+                </Link>
 
-        <button onClick={resetParcial}>Resetear App (excepto productos)</button>
-      </nav>
+                <button onClick={resetParcial}>
+                    Resetear App (excepto productos)
+                </button>
+            </nav>
 
-      <main className={styles["main-container"]}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <h1>¿Vos Que Tenes?</h1>
-                <section className={styles.section}>
-                  <SelectorPersona
-                    personas={personas}
-                    agregarPersona={agregarPersona}
-                    personaSeleccionada={personaSeleccionada}
-                    setPersonaSeleccionada={setPersonaSeleccionada}
-                    eliminarPersona={eliminarPersona}
-                  />
-                </section>
-                <section className={styles.section}>
-                  <ListaProductos
-                    productos={productos}
-                    personaSeleccionada={personaSeleccionada}
-                    agregarProducto={agregarProducto}
-                  />
-                </section>
-                <section className={styles.section}>
-                  <ResumenConsumo
-                    consumos={consumos}
-                    eliminarProducto={eliminarProducto}
-                  />
-                </section>
-                <section className={styles.section}>
-                  <HistorialPagos pagos={pagos} />
-                </section>
-              </>
-            }
-          />
-          <Route
-            path="/extra"
-            element={
-              <section className={styles.section}>
-                <ProductoExtra
-                  personaSeleccionada={personaSeleccionada}
-                  agregarProducto={agregarProducto}
-                />
-              </section>
-            }
-          />
-          <Route
-            path="/historial"
-            element={
-              <section className={styles.section}>
-                <HistorialPagos pagos={pagos} />
-              </section>
-            }
-          />
-        </Routes>
-      </main>
-    </Router>
+            <main className={styles["main-container"]}>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <h1>¿Vos Que Tenes?</h1>
+                                <section className={styles.section}>
+                                    <SelectorPersona
+                                        personas={personas}
+                                        agregarPersona={agregarPersona}
+                                        personaSeleccionada={
+                                            personaSeleccionada
+                                        }
+                                        setPersonaSeleccionada={
+                                            setPersonaSeleccionada
+                                        }
+                                        eliminarPersona={eliminarPersona}
+                                    />
+                                </section>
+                                <section className={styles.section}>
+                                    <ListaProductos
+                                        productos={productos}
+                                        personaSeleccionada={
+                                            personaSeleccionada
+                                        }
+                                        agregarProducto={agregarProducto}
+                                    />
+                                </section>
+                                <section className={styles.section}>
+                                    <ResumenConsumo
+                                        consumos={consumos}
+                                        eliminarProducto={eliminarProducto}
+                                    />
+                                </section>
+                                <section className={styles.section}>
+                                    <HistorialPagos pagos={pagos} />
+                                </section>
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/extra"
+                        element={
+                            <section className={styles.section}>
+                                <ProductoExtra
+                                    personaSeleccionada={personaSeleccionada}
+                                    agregarProducto={agregarProducto}
+                                />
+                            </section>
+                        }
+                    />
+                    <Route
+                        path="/historial"
+                        element={
+                            <section className={styles.section}>
+                                <HistorialPagos pagos={pagos} />
+                            </section>
+                        }
+                    />
+                </Routes>
+            </main>
+        </Router>
     )
 }
 

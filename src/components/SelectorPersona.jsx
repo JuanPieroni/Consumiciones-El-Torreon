@@ -37,7 +37,7 @@ const SelectorPersona = ({
       </div>
 
       <div className={styles.personasContainer}>
-        <p className={styles.subtitulo}>Personas:</p>
+        <p className={styles.subtitulo}>Agregar productos a ... {personaSeleccionada}</p>
         {personas.map((persona) => (
           <div key={persona} className={styles.personaItem}>
             <button

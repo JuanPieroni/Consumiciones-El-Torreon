@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styles from "./ProductoExtra.module.css"
-import { insertarProducto } from "../supabaseClient.js"
+import { supabase } from "../supabaseClient"
 
 const ProductoExtra = ({ personaSeleccionada, agregarProducto }) => {
     const [nombre, setNombre] = useState("")
@@ -9,10 +9,7 @@ const ProductoExtra = ({ personaSeleccionada, agregarProducto }) => {
     const navigate = useNavigate()
 
     const handleAgregar = async () => {
-        if (!personaSeleccionada) {
-            alert("Primero seleccioná una persona para agregar el producto.")
-            return
-        }
+        // 1. Validación básica
         if (
             nombre.trim() === "" ||
             precio === "" ||
@@ -24,29 +21,58 @@ const ProductoExtra = ({ personaSeleccionada, agregarProducto }) => {
         }
 
         const producto = {
-            id: Date.now(), // este es el ID local
             nombre: nombre.trim(),
             precio: Number(precio),
         }
 
-        // Primero lo agregás al consumo local (como venías haciendo)
-        agregarProducto(producto)
-
-        // Ahora intentás guardarlo en Supabase
         try {
-            await insertarProducto(producto.nombre, producto.precio)
-            console.log("Producto guardado en Supabase")
-        } catch (error) {
-            console.error("Error al guardar en Supabase", error)
-            // Podés mostrar un mensaje o dejarlo en silencio
-        }
+            // 2. Buscar si ya existe el producto por nombre
+            const { data: existente, error: errorExistente } = await supabase
+                .from("productos")
+                .select("*")
+                .eq("nombre", producto.nombre)
+                .maybeSingle()
 
-        setNombre("")
-        setPrecio("")
-        alert(
-            `Producto "${producto.nombre}" agregado a ${personaSeleccionada}.`
-        )
-        navigate("/") // Volver al home
+            if (errorExistente) throw errorExistente
+
+            if (!existente) {
+                // 3. Si no existe, lo insertamos
+                const { error: errorInsert } = await supabase
+                    .from("productos")
+                    .insert([producto])
+
+                if (errorInsert) throw errorInsert
+            } else if (existente.precio !== producto.precio) {
+                // 4. Si existe pero con otro precio, lo actualizamos
+                const { error: errorUpdate } = await supabase
+                    .from("productos")
+                    .update({ precio: producto.precio })
+                    .eq("nombre", producto.nombre)
+
+                if (errorUpdate) throw errorUpdate
+            }
+
+            // 5. Si hay persona seleccionada, se lo asignamos también a esa persona
+            if (personaSeleccionada) {
+                agregarProducto({
+                    id: Date.now(),
+                    ...producto,
+                })
+                alert(
+                    `Producto "${producto.nombre}" agregado a ${personaSeleccionada}.`
+                )
+            } else {
+                alert(`Producto "${producto.nombre}" guardado en la carta.`)
+            }
+
+            // 6. Limpiar formulario y volver al inicio
+            setNombre("")
+            setPrecio("")
+            navigate("/")
+        } catch (err) {
+            console.error("Error al agregar producto:", err.message)
+            alert("Ocurrió un error al guardar el producto.")
+        }
     }
 
     return (

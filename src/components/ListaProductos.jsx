@@ -1,7 +1,23 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { supabase } from "../supabaseClient"
 import styles from "./ListaProdutos.module.css"
 
-const ListaProductos = ({ productos, personaSeleccionada, agregarProducto }) => {
+const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
+  const [productos, setProductos] = useState([])
+
+  useEffect(() => {
+    const cargarProductos = async () => {
+      const { data, error } = await supabase.from("productos").select("*")
+      if (error) {
+        console.error("Error al cargar productos:", error.message)
+        return
+      }
+      setProductos(data)
+    }
+
+    cargarProductos()
+  }, [])
+
   const handleAgregar = (producto) => {
     if (!personaSeleccionada) {
       alert("Seleccioná una persona primero")

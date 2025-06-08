@@ -7,20 +7,4 @@ const SUPABASE_API_KEY =
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_API_KEY)
 
-// función para hacer peticiones fetch
-export async function insertarProducto(nombre, precio) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/productos`, {
-        method: "POST",
-        headers: {
-            apikey: SUPABASE_API_KEY,
-            Authorization: `Bearer ${SUPABASE_API_KEY}`,
-            "Content-Type": "application/json",
-            Prefer: "return=representation",
-        },
-        body: JSON.stringify([{ nombre, precio }]),
-    })
-
-    const data = await res.json()
-    if (!res.ok) throw new Error(data.message || "Error al insertar producto")
-    return data
-}
+ 
