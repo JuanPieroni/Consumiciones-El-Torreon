@@ -1,9 +1,9 @@
 import React from "react"
-
+import styles from "./ResumenConsumo.module.css"
 const ResumenConsumo = ({ consumos, eliminarProducto }) => {
     return (
-        <div>
-            <h3>Resumen de consumos</h3>
+        <div className={styles.container}>
+            <h3 className={styles.titulo}>Resumen de consumos</h3>
             {Object.keys(consumos).length === 0 && <p>No hay consumos aún</p>}
 
             {Object.entries(consumos).map(([persona, productos]) => {
@@ -13,17 +13,18 @@ const ResumenConsumo = ({ consumos, eliminarProducto }) => {
                 )
 
                 return (
-                    <div key={persona}  >
-                        <h4>{persona}</h4>
+                    <div key={persona} className={styles.persona} >
+                        <h4 className={styles.nombre}>{persona}</h4>
                         {productos.length === 0 ? (
                             <p>No consumió nada</p>
                         ) : (
-                            <ul>
+                            <ul className={styles.lista}>
                                 {productos.map(
                                     ({ id, nombre, precio }, idx) => (
-                                        <li key={`${id}-${idx}`}>
+                                        <li className={styles.item} key={`${id}-${idx}`}>
                                             {nombre} (${precio}){" "}
                                             <button
+                                            className={styles.eliminar}
                                                 onClick={() =>
                                                     eliminarProducto(
                                                         persona,

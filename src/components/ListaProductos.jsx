@@ -1,22 +1,32 @@
-import React from "react";
+import React from "react"
+import styles from "./ListaProdutos.module.css"
 
-const ListaProductos = ({ productos, agregarProducto, personaSeleccionada }) => {
+const ListaProductos = ({ productos, personaSeleccionada, agregarProducto }) => {
+  const handleAgregar = (producto) => {
+    if (!personaSeleccionada) {
+      alert("Seleccioná una persona primero")
+      return
+    }
+    agregarProducto(producto)
+  }
+
   return (
-    <div>
-      <h3>Agregar productos a {personaSeleccionada || "..."}</h3>
-      {!personaSeleccionada && <p>Seleccioná primero una persona</p>}
-      {productos.map(({ id, nombre, precio }) => (
-        <button
-          key={id}
-          disabled={!personaSeleccionada}
-          onClick={() => agregarProducto({ id, nombre, precio })}
-          
-        >
-          {nombre} (${precio})
-        </button>
-      ))}
+    <div className={styles.container}>
+      <h3 className={styles.titulo}>Productos</h3>
+      <div className={styles.lista}>
+        {productos.map((producto) => (
+          <button
+            key={producto.id}
+            className={styles.boton}
+            onClick={() => handleAgregar(producto)}
+          >
+            {producto.nombre} - ${producto.precio}
+          </button>
+        ))}
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default ListaProductos;
+export default ListaProductos
+

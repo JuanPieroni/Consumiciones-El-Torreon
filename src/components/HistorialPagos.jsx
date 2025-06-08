@@ -1,3 +1,7 @@
+
+import styles from "./HistorialPagos.module.css"
+
+
 const HistorialPagos = ({ pagos }) => {
     if (pagos.length === 0) return null
 
