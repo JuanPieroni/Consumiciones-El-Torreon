@@ -13,10 +13,8 @@ const ResumenConsumo = ({ consumos, eliminarProducto }) => {
                 )
 
                 return (
-                    <div key={persona} style={{ marginBottom: "20px" }}>
-                        <h4>
-                            {persona} - Total: ${total}
-                        </h4>
+                    <div key={persona}  >
+                        <h4>{persona}</h4>
                         {productos.length === 0 ? (
                             <p>No consumió nada</p>
                         ) : (
@@ -38,6 +36,9 @@ const ResumenConsumo = ({ consumos, eliminarProducto }) => {
                                         </li>
                                     )
                                 )}
+                                <h4>
+                                   Total: ${total}
+                                </h4>
                             </ul>
                         )}
                     </div>

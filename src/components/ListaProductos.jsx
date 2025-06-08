@@ -10,7 +10,7 @@ const ListaProductos = ({ productos, agregarProducto, personaSeleccionada }) => 
           key={id}
           disabled={!personaSeleccionada}
           onClick={() => agregarProducto({ id, nombre, precio })}
-          style={{ margin: "5px" }}
+          
         >
           {nombre} (${precio})
         </button>
