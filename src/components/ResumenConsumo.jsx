@@ -1,9 +1,9 @@
 import React from "react"
-import styles from "./ResumenConsumo.module.css"
+ 
 const ResumenConsumo = ({ consumos, eliminarProducto }) => {
     return (
-        <div className={styles.container}>
-            <h3 className={styles.titulo}>Resumen de consumos</h3>
+        <div >
+            <h3  >Resumen de consumos</h3>
             {Object.keys(consumos).length === 0 && <p>No hay consumos aún</p>}
 
             {Object.entries(consumos).map(([persona, productos]) => {
@@ -13,18 +13,21 @@ const ResumenConsumo = ({ consumos, eliminarProducto }) => {
                 )
 
                 return (
-                    <div key={persona} className={styles.persona} >
-                        <h4 className={styles.nombre}>{persona}</h4>
+                    <div key={persona}  >
+                        <h4 >{persona}</h4>
                         {productos.length === 0 ? (
                             <p>No consumió nada</p>
                         ) : (
-                            <ul className={styles.lista}>
+                            <ul >
                                 {productos.map(
                                     ({ id, nombre, precio }, idx) => (
-                                        <li className={styles.item} key={`${id}-${idx}`}>
+                                        <li
+                                            
+                                            key={`${id}-${idx}`}
+                                        >
                                             {nombre} (${precio}){" "}
                                             <button
-                                            className={styles.eliminar}
+                                                
                                                 onClick={() =>
                                                     eliminarProducto(
                                                         persona,
@@ -37,11 +40,10 @@ const ResumenConsumo = ({ consumos, eliminarProducto }) => {
                                         </li>
                                     )
                                 )}
-                                <h4>
-                                   Total: ${total}
-                                </h4>
+                                <h4>Total: ${total}</h4>
                             </ul>
                         )}
+
                     </div>
                 )
             })}

@@ -7,7 +7,6 @@ import ProductoExtra from "./components/ProductoExtra"
 import HistorialPagos from "./components/HistorialPagos"
 import { supabase } from "./supabaseClient"
 import { useEffect, useState } from "react"
-import styles from "./App.module.css"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -15,10 +14,7 @@ const App = () => {
         return personasGuardadas ? JSON.parse(personasGuardadas) : []
     })
 
-    const [consumos, setConsumos] = useState(() => {
-        const consumosGuardados = localStorage.getItem("consumos")
-        return consumosGuardados ? JSON.parse(consumosGuardados) : {}
-    })
+    const [consumos, setConsumos] = useState({})
 
     const [pagos, setPagos] = useState(() => {
         return JSON.parse(localStorage.getItem("pagos")) || []
@@ -110,86 +106,73 @@ const App = () => {
     }
 
     return (
-        <Router>
-            <nav className={styles.nav}>
-                <Link className={styles["nav-link"]} to="/">
-                    Inicio
-                </Link>
-                <Link className={styles["nav-link"]} to="/extra">
-                    Producto fuera de carta
-                </Link>
-                <Link className={styles["nav-link"]} to="/historial">
-                    Historial
-                </Link>
+        <>
+            <nav>
+                <Link to="/">Inicio</Link>
+                <Link to="/extra">Agregar Item</Link>
+                <Link to="/historial">Historial</Link>
 
                 <button onClick={resetParcial}>
                     Resetear App (excepto productos)
                 </button>
             </nav>
-
-            <main className={styles["main-container"]}>
-                <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            <>
-                                <h1>¿Vos Que Tenes?</h1>
-                                <section className={styles.section}>
-                                    <SelectorPersona
-                                        personas={personas}
-                                        agregarPersona={agregarPersona}
-                                        personaSeleccionada={
-                                            personaSeleccionada
-                                        }
-                                        setPersonaSeleccionada={
-                                            setPersonaSeleccionada
-                                        }
-                                        eliminarPersona={eliminarPersona}
-                                    />
-                                </section>
-                                <section className={styles.section}>
-                                    <ListaProductos
-                                        productos={productos}
-                                        personaSeleccionada={
-                                            personaSeleccionada
-                                        }
-                                        agregarProducto={agregarProducto}
-                                    />
-                                </section>
-                                <section className={styles.section}>
-                                    <ResumenConsumo
-                                        consumos={consumos}
-                                        eliminarProducto={eliminarProducto}
-                                    />
-                                </section>
-                                <section className={styles.section}>
-                                    <HistorialPagos pagos={pagos} />
-                                </section>
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/extra"
-                        element={
-                            <section className={styles.section}>
-                                <ProductoExtra
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <>
+                            <h1>¿Vos Que Tenes?</h1>
+                            <section >
+                                <SelectorPersona
+                                    personas={personas}
+                                    agregarPersona={agregarPersona}
+                                    personaSeleccionada={personaSeleccionada}
+                                    setPersonaSeleccionada={
+                                        setPersonaSeleccionada
+                                    }
+                                    eliminarPersona={eliminarPersona}
+                                />
+                            </section>
+                            <section  >
+                                <ListaProductos
+                                    productos={productos}
                                     personaSeleccionada={personaSeleccionada}
                                     agregarProducto={agregarProducto}
                                 />
                             </section>
-                        }
-                    />
-                    <Route
-                        path="/historial"
-                        element={
-                            <section className={styles.section}>
+                            <section  >
+                                <ResumenConsumo
+                                    consumos={consumos}
+                                    eliminarProducto={eliminarProducto}
+                                />
+                            </section>
+                            <section  >
                                 <HistorialPagos pagos={pagos} />
                             </section>
-                        }
-                    />
-                </Routes>
-            </main>
-        </Router>
+                        </>
+                    }
+                />
+                <Route
+                    path="/extra"
+                    element={
+                        <section  >
+                            <ProductoExtra
+                                personaSeleccionada={personaSeleccionada}
+                                agregarProducto={agregarProducto}
+                            />
+                        </section>
+                    }
+                />
+                <Route
+                    path="/historial"
+                    element={
+                        <section >
+                            <HistorialPagos pagos={pagos} />
+                        </section>
+                    }
+                />
+            </Routes>
+        </>
     )
 }
 

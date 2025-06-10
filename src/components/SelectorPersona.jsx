@@ -1,80 +1,59 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
-import styles from "./SelectorPersona.module.css";
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
+ 
 
 const SelectorPersona = ({
-  personas,
-  agregarPersona,
-  personaSeleccionada,
-  setPersonaSeleccionada,
-  eliminarPersona,
+    personas,
+    agregarPersona,
+    personaSeleccionada,
+    setPersonaSeleccionada,
+    eliminarPersona,
 }) => {
-  const [nombreInput, setNombreInput] = useState("");
-  const navigate = useNavigate();
+    const [nombreInput, setNombreInput] = useState("")
+    const navigate = useNavigate()
 
-  const handleAgregar = () => {
-    if (nombreInput.trim() !== "") {
-      agregarPersona(nombreInput.trim());
-      setNombreInput("");
+    const handleAgregar = () => {
+        if (nombreInput.trim() !== "") {
+            agregarPersona(nombreInput.trim())
+            setNombreInput("")
+        }
     }
-  };
 
-  return (
-    <div className={styles.container}>
-      <h3 className={styles.titulo}>Agregar o seleccionar persona</h3>
-      <div className={styles.inputGroup}>
-        <input
-          type="text"
-          placeholder="Nombre"
-          value={nombreInput}
-          onChange={(e) => setNombreInput(e.target.value)}
-          className={styles.input}
-        />
-        <button onClick={handleAgregar} className={styles.btnAgregar}>
-          Agregar
-        </button>
-      </div>
+    return (
+        <div>
+            <h3>Agregar o seleccionar persona</h3>
+            <div>
+                <input
+                    type="text"
+                    placeholder="Nombre"
+                    value={nombreInput}
+                    onChange={(e) => setNombreInput(e.target.value)}
+                />
+                <button onClick={handleAgregar}>Agregar</button>
+            </div>
 
-      <div className={styles.personasContainer}>
-        <p className={styles.subtitulo}>Agregar productos a ... {personaSeleccionada}</p>
-        {personas.map((persona) => (
-          <div key={persona} className={styles.personaItem}>
-            <button
-              onClick={() => setPersonaSeleccionada(persona)}
-              className={clsx(
-                styles.btnPersona,
-                persona === personaSeleccionada && styles.seleccionada
-              )}
-            >
-              {persona}
-            </button>
-            <button
-              onClick={() => eliminarPersona(persona)}
-              className={styles.btnEliminar}
-            >
-              Eliminar Persona
-            </button>
-          </div>
-        ))}
+            <div>
+                <p>Agregar productos a ... {personaSeleccionada}</p>
+                {personas.map((persona) => (
+                    <div key={persona}>
+                        <button onClick={() => setPersonaSeleccionada(persona)}>
+                            {persona}
+                        </button>
+                        <button onClick={() => eliminarPersona(persona)}>
+                           Pagó
+                        </button>
+                    </div>
+                ))}
 
-        <div className={styles.navegacion}>
-          <button
-            onClick={() => navigate("/extra")}
-            className={styles.btnNav}
-          >
-            Agregar producto fuera de carta
-          </button>
-          <button
-            onClick={() => navigate("/historial")}
-            className={styles.btnNav}
-          >
-            Ver historial de pagos
-          </button>
+                <div>
+                    <button onClick={() => navigate("/extra")}>
+                      Agregar Items
+                    </button>
+                  
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
-};
+    )
+}
 
-export default SelectorPersona;
+export default SelectorPersona
