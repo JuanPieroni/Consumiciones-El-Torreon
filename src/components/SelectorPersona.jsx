@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
- 
 
 const SelectorPersona = ({
     personas,
@@ -20,7 +19,14 @@ const SelectorPersona = ({
     }
 
     return (
-        <div>
+        <div
+            style={{
+                border: "2px dashed #888",
+                padding: "10px",
+                margin: "10px",
+                backgroundColor: "#f0f0f0",
+            }}
+        >
             <h3>Agregar o seleccionar persona</h3>
             <div>
                 <input
@@ -33,23 +39,23 @@ const SelectorPersona = ({
             </div>
 
             <div>
-                <p>Agregar productos a ... {personaSeleccionada}</p>
+                <p>Agregando productos a ... {personaSeleccionada}</p>
                 {personas.map((persona) => (
                     <div key={persona}>
                         <button onClick={() => setPersonaSeleccionada(persona)}>
                             {persona}
                         </button>
                         <button onClick={() => eliminarPersona(persona)}>
-                           Pagó
+                            Pagó
                         </button>
                     </div>
                 ))}
 
                 <div>
                     <button onClick={() => navigate("/extra")}>
-                      Agregar Items
+                        Agregar o actualizar producto
+                        
                     </button>
-                  
                 </div>
             </div>
         </div>

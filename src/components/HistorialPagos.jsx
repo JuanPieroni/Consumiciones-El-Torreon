@@ -1,11 +1,16 @@
- 
-
 const HistorialPagos = ({ pagos }) => {
     if (pagos.length === 0) return null
 
     return (
         <>
-            <div>
+            <div
+                style={{
+                    border: "2px dashed #888",
+                    padding: "10px",
+                    margin: "10px",
+                    backgroundColor: "#f0f0f0",
+                }}
+            >
                 <h3>Historial de pagos</h3>
                 <ul>
                     {pagos.map(({ nombre, total }, idx) => (
@@ -14,11 +19,28 @@ const HistorialPagos = ({ pagos }) => {
                         </li>
                     ))}
                 </ul>
+                <div>
+                    Total de pagos: $
+                    {pagos.reduce((acc, { total }) => acc + total, 0)}
+                </div>
+                {/*                 <div>
+                    Descuento 10% 
+                    ${pagos.reduce((acc, { total }) => acc + total * 0.1, 0)}
+                </div>
+                <div>
+              Total de pagos menos el 10% pagando en efectivo:
+                    
+                    $
+                    {pagos.reduce((acc, { total }) => acc + total * 0.9, 0)}
+                </div> */}
                 <button onClick={() => navigate("/")}>Volver al inicio</button>
                 {/* boton para eliminar el hitorial de pagos  */}
                 <button
                     onClick={() => {
-                       {setPagos([]); localStorage.removeItem("pagos")}
+                        {
+                            setPagos([])
+                            localStorage.removeItem("pagos")
+                        }
                     }}
                 >
                     Eliminar historial de pagos

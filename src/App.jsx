@@ -111,10 +111,6 @@ const App = () => {
                 <Link to="/">Inicio</Link>
                 <Link to="/extra">Agregar Item</Link>
                 <Link to="/historial">Historial</Link>
-
-                <button onClick={resetParcial}>
-                    Resetear App (excepto productos)
-                </button>
             </nav>
             <Routes>
                 <Route
@@ -122,7 +118,7 @@ const App = () => {
                     element={
                         <>
                             <h1>¿Vos Que Tenes?</h1>
-                            <section >
+                            <section>
                                 <SelectorPersona
                                     personas={personas}
                                     agregarPersona={agregarPersona}
@@ -133,29 +129,27 @@ const App = () => {
                                     eliminarPersona={eliminarPersona}
                                 />
                             </section>
-                            <section  >
+                            <section>
                                 <ListaProductos
                                     productos={productos}
                                     personaSeleccionada={personaSeleccionada}
                                     agregarProducto={agregarProducto}
                                 />
                             </section>
-                            <section  >
+                            <section>
                                 <ResumenConsumo
                                     consumos={consumos}
                                     eliminarProducto={eliminarProducto}
                                 />
                             </section>
-                            <section  >
-                                <HistorialPagos pagos={pagos} />
-                            </section>
+                        
                         </>
                     }
                 />
                 <Route
                     path="/extra"
                     element={
-                        <section  >
+                        <section>
                             <ProductoExtra
                                 personaSeleccionada={personaSeleccionada}
                                 agregarProducto={agregarProducto}
@@ -166,12 +160,15 @@ const App = () => {
                 <Route
                     path="/historial"
                     element={
-                        <section >
+                        <section>
                             <HistorialPagos pagos={pagos} />
                         </section>
                     }
                 />
             </Routes>
+            <button onClick={resetParcial}>
+                Reset 
+            </button>
         </>
     )
 }

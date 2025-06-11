@@ -50,7 +50,14 @@ const ProductoExtra = ({ personaSeleccionada, agregarProducto }) => {
     }
 
     return (
-        <div>
+        <div
+            style={{
+                border: "2px dashed #888",
+                padding: "10px",
+                margin: "10px",
+                backgroundColor: "#f0f0f0",
+            }}
+        >
             <h2>Agregar producto fuera de carta</h2>
             <p>
                 Persona seleccionada: <b>{personaSeleccionada || "Ninguna"}</b>
