@@ -7,6 +7,8 @@ import ProductoExtra from "./components/ProductoExtra"
 import HistorialPagos from "./components/HistorialPagos"
 import { supabase } from "./supabaseClient"
 import { useEffect, useState } from "react"
+import ContainerPaper from "./components/ContainerPaper"
+import { Typography } from "@mui/material"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -117,7 +119,16 @@ const App = () => {
                     path="/"
                     element={
                         <>
-                            <h1>¿Vos Que Tenes?</h1>
+                            <ContainerPaper>
+                                <Typography
+                                    variant="h4"
+                                    align="center"
+                                    gutterBottom
+                                >
+                                    Consumos El Torreon III
+                                </Typography>
+                            </ContainerPaper>
+
                             <section>
                                 <SelectorPersona
                                     personas={personas}
@@ -142,7 +153,6 @@ const App = () => {
                                     eliminarProducto={eliminarProducto}
                                 />
                             </section>
-                        
                         </>
                     }
                 />
@@ -166,9 +176,7 @@ const App = () => {
                     }
                 />
             </Routes>
-            <button onClick={resetParcial}>
-                Reset 
-            </button>
+            <button onClick={resetParcial}>Reset</button>
         </>
     )
 }

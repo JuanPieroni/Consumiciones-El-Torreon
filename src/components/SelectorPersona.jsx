@@ -1,5 +1,14 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import {
+    Box,
+    Typography,
+    TextField,
+    Button,
+    Grid,
+    Paper,
+    Stack,
+} from "@mui/material"
 
 const SelectorPersona = ({
     personas,
@@ -19,47 +28,93 @@ const SelectorPersona = ({
     }
 
     return (
-        <div
-            style={{
-                border: "2px dashed #888",
-                padding: "10px",
-                margin: "10px",
-                backgroundColor: "#f0f0f0",
+        <Paper
+            elevation={3}
+            sx={{
+               
+                p: 4,
+                m: 2,
+                bgcolor: "#f9f9f9",
             }}
         >
-            <h3>Agregar o seleccionar persona</h3>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Nombre"
+            <Typography variant="h5" align="center" gutterBottom>
+                Agregar o seleccionar persona
+            </Typography>
+
+            <Stack spacing={2} direction={{ xs: "column", sm: "row" }} mb={3}>
+                <TextField
+                    label="Nombre"
+                    variant="outlined"
                     value={nombreInput}
                     onChange={(e) => setNombreInput(e.target.value)}
+                    fullWidth
                 />
-                <button onClick={handleAgregar}>Agregar</button>
-            </div>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleAgregar}
+                >
+                    Agregar
+                </Button>
+            </Stack>
 
-            <div>
-                <p>Agregando productos a ... {personaSeleccionada}</p>
-                {personas.map((persona) => (
-                    <div key={persona}>
-                        <button onClick={() => setPersonaSeleccionada(persona)}>
-                            {persona}
-                        </button>
-                        <button onClick={() => eliminarPersona(persona)}>
-                            Pagó
-                        </button>
-                    </div>
-                ))}
+            <Typography variant="subtitle1" gutterBottom>
+                {personaSeleccionada
+                    ? `Agregando productos a: ${personaSeleccionada}`
+                    : "Seleccioná una persona"}
+            </Typography>
 
-                <div>
-                    <button onClick={() => navigate("/extra")}>
-                        Agregar o actualizar producto
-                        
-                    </button>
-                </div>
-            </div>
-        </div>
+            <Grid container spacing={2}>
+                {personas.map((persona) => {
+                    const isSelected = persona === personaSeleccionada
+                    return (
+                        <Grid item xs={12} sm={6} md={4} key={persona}>
+                            <Paper
+                                sx={{
+                                    p: 2,
+                                    textAlign: "center",
+                                    bgcolor: isSelected ? "primary.light" : "background.paper",
+                                    color: isSelected ? "primary.contrastText" : "text.primary",
+                                    border: isSelected ? "2px solid" : "1px solid #ccc",
+                                    borderColor: isSelected ? "primary.main" : "#ccc",
+                                    transition: "background-color 0.3s, border-color 0.3s",
+                                }}
+                            >
+                                <Typography variant="h6">{persona}</Typography>
+                                <Stack spacing={1} mt={1} direction="row" justifyContent="center">
+                                    <Button
+                                        variant={isSelected ? "contained" : "outlined"}
+                                        color="primary"
+                                        onClick={() => setPersonaSeleccionada(persona)}
+                                    >
+                                        Seleccionar
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="success"
+                                        onClick={() => eliminarPersona(persona)}
+                                    >
+                                        Pagó
+                                    </Button>
+                                </Stack>
+                            </Paper>
+                        </Grid>
+                    )
+                })}
+            </Grid>
+
+            <Box mt={4} textAlign="center">
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => navigate("/extra")}
+                >
+                    Agregar o actualizar producto
+                </Button>
+            </Box>
+        </Paper>
     )
 }
 
 export default SelectorPersona
+

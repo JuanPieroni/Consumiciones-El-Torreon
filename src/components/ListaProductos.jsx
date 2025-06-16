@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react"
-import { supabase } from "../supabaseClient"
-
+import React from "react"
 import { useProductos } from "../context/ProductosContext.jsx"
+import { Box, Typography, Grid, Button, Paper } from "@mui/material"
 
 const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
     const { productos } = useProductos()
@@ -15,26 +14,40 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
     }
 
     return (
-        <div
-            style={{
-                border: "2px dashed #888",
-                padding: "10px",
-                margin: "10px",
-                backgroundColor: "#f0f0f0",
+        <Paper
+            elevation={3}
+            sx={{
+                
+                p: 2,
+                m: 2,
+                bgcolor: "#f0f0f0",
             }}
         >
-            <h3>Lista de Productos</h3>
-            <div>
+            <Typography variant="h6" gutterBottom>
+                Lista de Productos
+            </Typography>
+            <Grid container spacing={2}>
                 {productos.map((producto) => (
-                    <button
-                        key={producto.id}
-                        onClick={() => handleAgregar(producto)}
-                    >
-                        {producto.nombre} {/*-  ${producto.precio} */}
-                    </button>
+                    <Grid item xs={6} sm={4} md={3} key={producto.id}>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={() => handleAgregar(producto)}
+                            sx={{
+                                textTransform: "none",
+                                bgcolor: "#1976d2",
+                                ":hover": {
+                                    bgcolor: "#1565c0",
+                                },
+                            }}
+                        >
+                            {producto.nombre}
+                        </Button>
+                    </Grid>
                 ))}
-            </div>
-        </div>
+            </Grid>
+        </Paper>
     )
 }
 
