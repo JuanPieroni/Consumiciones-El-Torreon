@@ -1,9 +1,33 @@
-import React from "react"
-import { useProductos } from "../context/ProductosContext.jsx"
-import { Box, Typography, Grid, Button, Paper } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { supabase } from "../supabaseClient"
+import {
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    Typography,
+    Grid,
+    Card,
+    CardContent,
+    CardActions,
+    Button,
+} from "@mui/material"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
-    const { productos } = useProductos()
+    const [productos, setProductos] = useState([])
+
+    useEffect(() => {
+        const cargarProductos = async () => {
+            const { data, error } = await supabase.from("productos").select("*")
+            if (error) {
+                console.error("Error al cargar productos:", error.message)
+                return
+            }
+            setProductos(data)
+        }
+
+        cargarProductos()
+    }, [])
 
     const handleAgregar = (producto) => {
         if (!personaSeleccionada) {
@@ -13,41 +37,68 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
         agregarProducto(producto)
     }
 
+    const productosPorCategoria = productos.reduce((acc, producto) => {
+        const categoria = producto.categoria || "Otros"
+        if (!acc[categoria]) acc[categoria] = []
+        acc[categoria].push(producto)
+        return acc
+    }, {})
+
     return (
-        <Paper
-            elevation={3}
-            sx={{
-                
-                p: 2,
-                m: 2,
-                bgcolor: "#f0f0f0",
-            }}
-        >
-            <Typography variant="h6" gutterBottom>
-                Lista de Productos
+        <div>
+            <Typography variant="h5" gutterBottom>
+                Productos
             </Typography>
-            <Grid container spacing={2}>
-                {productos.map((producto) => (
-                    <Grid item xs={6} sm={4} md={3} key={producto.id}>
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            onClick={() => handleAgregar(producto)}
-                            sx={{
-                                textTransform: "none",
-                                bgcolor: "#1976d2",
-                                ":hover": {
-                                    bgcolor: "#1565c0",
-                                },
-                            }}
-                        >
-                            {producto.nombre}
-                        </Button>
-                    </Grid>
-                ))}
-            </Grid>
-        </Paper>
+
+            {Object.entries(productosPorCategoria).map(([categoria, items]) => (
+                <Accordion key={categoria}  >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography variant="h6">
+                            {categoria.toUpperCase()}
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Grid container spacing={2}>
+                            {items.map((producto) => (
+                                <Grid
+                                    item
+                                    xs={6}
+                                    sm={4}
+                                    md={3}
+                                    key={producto.id}
+                                >
+                                    <Card>
+                                        <CardContent>
+                                            <Typography variant="subtitle1">
+                                                {producto.nombre}
+                                            </Typography>
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                            >
+                                                ${producto.precio}
+                                            </Typography>
+                                        </CardContent>
+                                        <CardActions>
+                                            <Button
+                                                size="small"
+                                                variant="contained"
+                                                onClick={() =>
+                                                    handleAgregar(producto)
+                                                }
+                                                fullWidth
+                                            >
+                                                Agregar
+                                            </Button>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </AccordionDetails>
+                </Accordion>
+            ))}
+        </div>
     )
 }
 

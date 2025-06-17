@@ -1,14 +1,5 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import {
-    Box,
-    Typography,
-    TextField,
-    Button,
-    Grid,
-    Paper,
-    Stack,
-} from "@mui/material"
+import { Grid, Paper, Stack, Typography, TextField, Button } from "@mui/material"
 
 const SelectorPersona = ({
     personas,
@@ -18,7 +9,6 @@ const SelectorPersona = ({
     eliminarPersona,
 }) => {
     const [nombreInput, setNombreInput] = useState("")
-    const navigate = useNavigate()
 
     const handleAgregar = () => {
         if (nombreInput.trim() !== "") {
@@ -28,15 +18,7 @@ const SelectorPersona = ({
     }
 
     return (
-        <Paper
-            elevation={3}
-            sx={{
-               
-                p: 4,
-                m: 2,
-                bgcolor: "#f9f9f9",
-            }}
-        >
+        <Paper elevation={3} sx={{ p: 4, m: 2, bgcolor: "#f9f9f9" }}>
             <Typography variant="h5" align="center" gutterBottom>
                 Agregar o seleccionar persona
             </Typography>
@@ -73,19 +55,38 @@ const SelectorPersona = ({
                                 sx={{
                                     p: 2,
                                     textAlign: "center",
-                                    bgcolor: isSelected ? "primary.light" : "background.paper",
-                                    color: isSelected ? "primary.contrastText" : "text.primary",
-                                    border: isSelected ? "2px solid" : "1px solid #ccc",
-                                    borderColor: isSelected ? "primary.main" : "#ccc",
-                                    transition: "background-color 0.3s, border-color 0.3s",
+                                    bgcolor: isSelected
+                                        ? "primary.light"
+                                        : "background.paper",
+                                    color: isSelected
+                                        ? "primary.contrastText"
+                                        : "text.primary",
+                                    border: isSelected
+                                        ? "2px solid"
+                                        : "1px solid #ccc",
+                                    borderColor: isSelected
+                                        ? "primary.main"
+                                        : "#ccc",
+                                    transition:
+                                        "background-color 0.3s, border-color 0.3s",
+                                    elevation: isSelected ? 3 : 1,
                                 }}
                             >
                                 <Typography variant="h6">{persona}</Typography>
-                                <Stack spacing={1} mt={1} direction="row" justifyContent="center">
+                                <Stack
+                                    spacing={1}
+                                    mt={1}
+                                    direction="row"
+                                    justifyContent="center"
+                                >
                                     <Button
-                                        variant={isSelected ? "contained" : "outlined"}
+                                        variant={
+                                            isSelected ? "contained" : "outlined"
+                                        }
                                         color="primary"
-                                        onClick={() => setPersonaSeleccionada(persona)}
+                                        onClick={() =>
+                                            setPersonaSeleccionada(persona)
+                                        }
                                     >
                                         Seleccionar
                                     </Button>
@@ -102,19 +103,8 @@ const SelectorPersona = ({
                     )
                 })}
             </Grid>
-
-            <Box mt={4} textAlign="center">
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => navigate("/extra")}
-                >
-                    Agregar o actualizar producto
-                </Button>
-            </Box>
         </Paper>
     )
 }
 
 export default SelectorPersona
-

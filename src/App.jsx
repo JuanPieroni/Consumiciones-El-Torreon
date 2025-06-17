@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import SelectorPersona from "./components/SelectorPersona"
 import ListaProductos from "./components/ListaProductos"
 import ResumenConsumo from "./components/ResumenConsumo"
-import ProductoExtra from "./components/ProductoExtra"
+
 import HistorialPagos from "./components/HistorialPagos"
 import { supabase } from "./supabaseClient"
 import { useEffect, useState } from "react"
 import ContainerPaper from "./components/ContainerPaper"
 import { Typography } from "@mui/material"
+import FormularioProducto from "./components/FormularioProducto"
+import Navbar from "./components/NavBar"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -109,28 +111,12 @@ const App = () => {
 
     return (
         <>
-            <nav>
-                <Link to="/">Inicio</Link>
-                <Link to="/extra">Agregar Item</Link>
-                <Link to="/historial">Historial</Link>
-            </nav>
+            <Navbar />
             <Routes>
                 <Route
                     path="/"
                     element={
                         <>
-                            <ContainerPaper>
-                                <Typography
-                                    variant="h4"
-                                    align="center"
-                                    gutterBottom
-                                    sx={{ marginTop: 2 }}
-                                    color="primary"
-                                >
-                                    Consumos El Torreon III
-                                </Typography>
-                            </ContainerPaper>
-
                             <section>
                                 <SelectorPersona
                                     personas={personas}
@@ -158,25 +144,20 @@ const App = () => {
                         </>
                     }
                 />
-                <Route
-                    path="/extra"
-                    element={
-                        <section>
-                            <ProductoExtra
-                                personaSeleccionada={personaSeleccionada}
-                                agregarProducto={agregarProducto}
-                            />
-                        </section>
-                    }
-                />
+
                 <Route
                     path="/historial"
                     element={
                         <section>
-                            <HistorialPagos pagos={pagos} />
+                            <HistorialPagos
+                                pagos={pagos}
+                                consumos={consumos}
+                                productos={productos}
+                            />
                         </section>
                     }
                 />
+                <Route path="/admin" element={<FormularioProducto />} />
             </Routes>
             <button onClick={resetParcial}>Reset</button>
         </>

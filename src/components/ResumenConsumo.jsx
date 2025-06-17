@@ -57,7 +57,11 @@ const ResumenConsumo = ({ consumos, eliminarProducto }) => {
                                                 <List dense>
                                                     {productos.map(
                                                         (
-                                                            { id, nombre, precio },
+                                                            {
+                                                                id,
+                                                                nombre,
+                                                                precio,
+                                                            },
                                                             idx
                                                         ) => (
                                                             <ListItem
@@ -115,4 +119,3 @@ const ResumenConsumo = ({ consumos, eliminarProducto }) => {
 }
 
 export default ResumenConsumo
-

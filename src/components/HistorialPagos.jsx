@@ -1,4 +1,4 @@
-const HistorialPagos = ({ pagos }) => {
+const HistorialPagos = ({ pagos, productos }) => {
     if (pagos.length === 0) return null
 
     return (
@@ -19,20 +19,12 @@ const HistorialPagos = ({ pagos }) => {
                         </li>
                     ))}
                 </ul>
+
                 <div>
                     Total de pagos: $
                     {pagos.reduce((acc, { total }) => acc + total, 0)}
                 </div>
-                {/*                 <div>
-                    Descuento 10% 
-                    ${pagos.reduce((acc, { total }) => acc + total * 0.1, 0)}
-                </div>
-                <div>
-              Total de pagos menos el 10% pagando en efectivo:
-                    
-                    $
-                    {pagos.reduce((acc, { total }) => acc + total * 0.9, 0)}
-                </div> */}
+
                 <button onClick={() => navigate("/")}>Volver al inicio</button>
                 {/* boton para eliminar el hitorial de pagos  */}
                 <button
