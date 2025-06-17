@@ -10,7 +10,7 @@ import { useEffect, useState } from "react"
 import ContainerPaper from "./components/ContainerPaper"
 import { Typography } from "@mui/material"
 import FormularioProducto from "./components/FormularioProducto"
-import NavBar from "./components/NavBar.jsx"
+import NavBar from "./components/Navbar_temp"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
