@@ -11,6 +11,8 @@ import ContainerPaper from "./components/ContainerPaper"
 import { Typography } from "@mui/material"
 import FormularioProducto from "./components/FormularioProducto"
 import NavBar from "./components/NavBar"
+import Button from "@mui/material/Button"
+import DeleteIcon from "@mui/icons-material/Delete"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -99,7 +101,9 @@ const App = () => {
             }
         })
     }
-
+    const eliminarPersonaDelListado = (nombre) => {
+        setPersonas((prev) => prev.filter((p) => p !== nombre))
+    }
     const resetParcial = () => {
         if (
             window.confirm(
@@ -143,6 +147,7 @@ const App = () => {
                                 <ResumenConsumo
                                     consumos={consumos}
                                     eliminarProducto={eliminarProducto}
+                                    eliminarPersona={eliminarPersona}
                                 />
                             </section>
                         </>
@@ -164,6 +169,23 @@ const App = () => {
                 <Route path="/admin" element={<FormularioProducto />} />
             </Routes>
             <button onClick={resetParcial}>Reset</button>
+            <Button
+                startIcon={<DeleteIcon />}
+                variant="contained"
+                color="error"
+                onClick={() => {
+                    if (
+                        personaSeleccionada &&
+                        window.confirm(
+                            `¿Seguro que querés eliminar a ${personaSeleccionada}?`
+                        )
+                    ) {
+                        eliminarPersonaDelListado(personaSeleccionada)
+                    }
+                }}
+            >
+                Eliminar Persona
+            </Button>
         </>
     )
 }

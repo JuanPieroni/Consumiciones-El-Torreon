@@ -6,9 +6,8 @@ import {
     TextField,
     Button,
     Card,
-    CardContent,
+    Grid,
     Stack,
-    Divider,
 } from "@mui/material"
 
 const SelectorPersona = ({
@@ -55,73 +54,45 @@ const SelectorPersona = ({
                 </Button>
             </Stack>
 
-            <Typography variant="subtitle1" gutterBottom>
+            <Typography variant="subtitle1" gutterBottom align="center">
                 {personaSeleccionada
                     ? `Agregando productos a: ${personaSeleccionada}`
                     : "Seleccioná una persona"}
             </Typography>
 
-            <Stack
-                spacing={1}
-                mb={3}
-                direction={{ xs: "row", sm: "row" }}
-                justifyContent="center"
-                alignContent={"center"}
-                useFlexGap={true}
-                flexWrap="wrap"
-                alignSelf={"center"}
-                sx={{
-                    gap: 2,
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
+            <Grid container spacing={2} justifyContent="center">
                 {personas.map((persona) => {
                     const isSelected = persona === personaSeleccionada
                     return (
-                        <Card
-                            key={persona}
-                            sx={{
-                                borderRadius: 1,
-                                boxShadow: isSelected ? 4 : 1,
-                                bgcolor: isSelected
-                                    ? "primary.light"
-                                    : "background.paper",
-                                color: isSelected
-                                    ? "primary.contrastText"
-                                    : "text.primary",
-                                border: isSelected
-                                    ? "2px solid"
-                                    : "1px solid #ccc",
-                                borderColor: isSelected
-                                    ? "primary.main"
-                                    : "#ccc",
-                                transition:
-                                    "background-color 0.3s, border-color 0.3s",
-                            }}
-                        >
-                            <CardContent
+                        <Grid item xs={6} sm={4} md={3} key={persona}>
+                            <Card
                                 onClick={() => setPersonaSeleccionada(persona)}
+                                sx={{
+                                    cursor: "pointer",
+                                    borderRadius: 2,
+
+                                    bgcolor: isSelected
+                                        ? "primary.light"
+                                        : "background.paper",
+
+                                    transition: "all 0.3s",
+                                    height: "30px", // 🔽 MÁS CHICO
+                                    minWidth: "10px", // 🔽 ANCHO MÍNIMO
+                                    px: 1, // 🔽 padding horizontal
+                                    py: 0.4, // 🔽 padding vertical
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
                             >
-                                <Typography
-                                    variant={"outlined"}
-                                    mb={1}
-                                    textAlign={"center"}
-                                >
+                                <Typography variant="body2" noWrap>
                                     {persona}
                                 </Typography>
-                                <Stack
-                                    direction="column"
-                                    spacing={10}
-                                    justifyContent="center"
-                                ></Stack>
-                            </CardContent>
-                        </Card>
+                            </Card>
+                        </Grid>
                     )
                 })}
-            </Stack>
-
-            <Box textAlign="center"></Box>
+            </Grid>
         </Box>
     )
 }

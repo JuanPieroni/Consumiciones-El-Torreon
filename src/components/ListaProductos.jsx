@@ -81,7 +81,7 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                             display: "flex",
                                             flexDirection: "column",
                                             justifyContent: "space-between",
-                                            
+
                                             textAlign: "center",
                                         }}
                                     >
@@ -101,9 +101,8 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                                 variant="body2"
                                                 sx={{
                                                     color: "text.secondary",
-                                                   fontSize: "0.9rem",
-                                                   mb: 1,
-
+                                                    fontSize: "0.9rem",
+                                                    mb: 1,
                                                 }}
                                             >
                                                 ${producto.precio}
