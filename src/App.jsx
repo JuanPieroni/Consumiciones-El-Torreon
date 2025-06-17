@@ -11,9 +11,7 @@ import ContainerPaper from "./components/ContainerPaper"
 import { Typography } from "@mui/material"
 import FormularioProducto from "./components/FormularioProducto"
 import NavBar from "./components/NavBar"
-import Button from "@mui/material/Button"
-import DeleteIcon from "@mui/icons-material/Delete"
-
+import Swal from "sweetalert2"
 const App = () => {
     const [personas, setPersonas] = useState(() => {
         const personasGuardadas = localStorage.getItem("personas")
@@ -54,7 +52,22 @@ const App = () => {
     const eliminarPersona = (nombre) => {
         const total =
             consumos[nombre]?.reduce((acc, prod) => acc + prod.precio, 0) || 0
-        alert(`${nombre} ya abonó la suma de $${total}`)
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer
+                toast.onmouseleave = Swal.resumeTimer
+            },
+        })
+        Toast.fire({
+            icon: "success",
+            title: `${nombre} ya abonó la suma de $${total}`,
+        })
+        
         setPagos((prev) => [
             ...prev,
             { nombre, total, consumos: consumos[nombre] || [] },
@@ -169,23 +182,6 @@ const App = () => {
                 <Route path="/admin" element={<FormularioProducto />} />
             </Routes>
             <button onClick={resetParcial}>Reset</button>
-            <Button
-                startIcon={<DeleteIcon />}
-                variant="contained"
-                color="error"
-                onClick={() => {
-                    if (
-                        personaSeleccionada &&
-                        window.confirm(
-                            `¿Seguro que querés eliminar a ${personaSeleccionada}?`
-                        )
-                    ) {
-                        eliminarPersonaDelListado(personaSeleccionada)
-                    }
-                }}
-            >
-                Eliminar Persona
-            </Button>
         </>
     )
 }

@@ -15,7 +15,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import DeleteIcon from "@mui/icons-material/Delete"
 import PaidIcon from "@mui/icons-material/Paid"
-
+ 
 const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
     const granTotal = Object.values(consumos).reduce(
         (acc, productos) =>
@@ -135,6 +135,18 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                                         Pagó
                                                     </Button>
                                                 </Grid>
+                                                <Grid item>
+                                                    <Typography
+                                                        variant="body2"
+                                                        sx={{
+                                                            fontWeight: "bold",
+                                                            color: "text.secondary",
+                                                        }}
+                                                    >
+                                                        Total: ${total}
+                                                    </Typography>
+                                                </Grid>
+                                             
                                             </Grid>
                                         </>
                                     )}

@@ -9,12 +9,12 @@ import {
     Card,
     CardContent,
     CardActions,
-    Button,
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
     const [productos, setProductos] = useState([])
+    const [expanded, setExpanded] = useState(false) // cuál está expandido
 
     useEffect(() => {
         const cargarProductos = async () => {
@@ -44,6 +44,19 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
         return acc
     }, {})
 
+    const handleChange = (categoria) => (event, isExpanded) => {
+        setExpanded(isExpanded ? categoria : false)
+        if (isExpanded) {
+            // espera un poco para que se aplique la animación del Accordion
+            setTimeout(() => {
+                const element = document.getElementById(`accordion-${categoria}`)
+                if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" })
+                }
+            }, 150)
+        }
+    }
+
     return (
         <div>
             <Typography variant="h5" gutterBottom>
@@ -51,8 +64,23 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
             </Typography>
 
             {Object.entries(productosPorCategoria).map(([categoria, items]) => (
-                <Accordion key={categoria}>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Accordion
+                    key={categoria}
+                    expanded={expanded === categoria}
+                    onChange={handleChange(categoria)}
+                    TransitionProps={{ timeout: 600 }}
+                    sx={{
+                        transition: "box-shadow 0.3s ease",
+                        boxShadow: "0px 2px 6px rgba(0,0,0,0.1)",
+                        "&.Mui-expanded": {
+                            boxShadow: "0px 6px 16px rgba(0,0,0,0.2)",
+                        },
+                    }}
+                >
+                    <AccordionSummary
+                        id={`accordion-${categoria}`} // <- id para el scroll
+                        expandIcon={<ExpandMoreIcon />}
+                    >
                         <Typography variant="h6">
                             {categoria.toUpperCase()}
                         </Typography>
@@ -69,7 +97,16 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                 >
                                     <Card
                                         sx={{
+                                            //hacer mas chico el card
+                                           
                                             height: "100%",
+
+                                            
+
+                                            border: "1px solid #e0e0e0",
+
+                                            
+
                                             borderRadius: 3,
                                             boxShadow:
                                                 "0 2px 10px rgba(0,0,0,0.08)",
@@ -81,16 +118,27 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                             display: "flex",
                                             flexDirection: "column",
                                             justifyContent: "space-between",
-
                                             textAlign: "center",
                                         }}
                                     >
-                                        <CardContent>
+                                        <CardContent
+                                            sx={{
+                                                flexGrow: 1,
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                cursor: "pointer",
+                                            }}
+                                            onClick={() =>
+                                                handleAgregar(producto)
+                                            }
+                                        >
                                             <Typography
                                                 variant="subtitle1"
                                                 sx={{
                                                     fontWeight: 600,
-                                                    fontSize: "1rem",
+                                                    fontSize: "0.8rem",
                                                     mb: 1,
                                                     color: "text.primary",
                                                 }}
@@ -101,34 +149,14 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                                 variant="body2"
                                                 sx={{
                                                     color: "text.secondary",
-                                                    fontSize: "0.9rem",
+                                                    fontSize: "0.5rem",
                                                     mb: 1,
                                                 }}
                                             >
                                                 ${producto.precio}
                                             </Typography>
                                         </CardContent>
-                                        <CardActions sx={{ px: 2, pb: 2 }}>
-                                            <Button
-                                                size="small"
-                                                variant="contained"
-                                                onClick={() =>
-                                                    handleAgregar(producto)
-                                                }
-                                                fullWidth
-                                                sx={{
-                                                    fontWeight: 600,
-                                                    textTransform: "none",
-                                                    borderRadius: 2,
-                                                    bgcolor: "InfoText",
-                                                    "&:hover": {
-                                                        bgcolor: "primary.dark",
-                                                    },
-                                                }}
-                                            >
-                                                Agregar
-                                            </Button>
-                                        </CardActions>
+                                        <CardActions sx={{ px: 2, pb: 2 }}></CardActions>
                                     </Card>
                                 </Grid>
                             ))}

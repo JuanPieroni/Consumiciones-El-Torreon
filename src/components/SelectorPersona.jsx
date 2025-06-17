@@ -9,6 +9,7 @@ import {
     Grid,
     Stack,
 } from "@mui/material"
+import Swal from "sweetalert2"
 
 const SelectorPersona = ({
     personas,
@@ -21,9 +22,20 @@ const SelectorPersona = ({
     const navigate = useNavigate()
 
     const handleAgregar = () => {
-        if (nombreInput.trim() !== "") {
-            agregarPersona(nombreInput.trim())
+        // uppercase all letters
+        const nombre = nombreInput.trim().toUpperCase()
+        if (nombre && !personas.includes(nombre)) {
+            agregarPersona(nombre)
             setNombreInput("")
+        } else if (nombre && personas.includes(nombre)) {
+            setPersonaSeleccionada(nombre)
+        } else {
+            Swal.fire({
+                 
+                text: "Ingresa un nombre válido",
+                icon: "error",
+                confirmButtonText: "OK",
+            })
         }
     }
 
