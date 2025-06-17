@@ -51,7 +51,7 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
             </Typography>
 
             {Object.entries(productosPorCategoria).map(([categoria, items]) => (
-                <Accordion key={categoria}  >
+                <Accordion key={categoria}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography variant="h6">
                             {categoria.toUpperCase()}
@@ -62,24 +62,54 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                             {items.map((producto) => (
                                 <Grid
                                     item
-                                    xs={6}
+                                    xs={4}
                                     sm={4}
                                     md={3}
                                     key={producto.id}
                                 >
-                                    <Card>
+                                    <Card
+                                        sx={{
+                                            height: "100%",
+                                            borderRadius: 3,
+                                            boxShadow:
+                                                "0 2px 10px rgba(0,0,0,0.08)",
+                                            transition:
+                                                "transform 0.2s ease-in-out",
+                                            "&:hover": {
+                                                transform: "scale(1.03)",
+                                            },
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            justifyContent: "space-between",
+                                            
+                                            textAlign: "center",
+                                        }}
+                                    >
                                         <CardContent>
-                                            <Typography variant="subtitle1">
+                                            <Typography
+                                                variant="subtitle1"
+                                                sx={{
+                                                    fontWeight: 600,
+                                                    fontSize: "1rem",
+                                                    mb: 1,
+                                                    color: "text.primary",
+                                                }}
+                                            >
                                                 {producto.nombre}
                                             </Typography>
                                             <Typography
                                                 variant="body2"
-                                                color="text.secondary"
+                                                sx={{
+                                                    color: "text.secondary",
+                                                   fontSize: "0.9rem",
+                                                   mb: 1,
+
+                                                }}
                                             >
                                                 ${producto.precio}
                                             </Typography>
                                         </CardContent>
-                                        <CardActions>
+                                        <CardActions sx={{ px: 2, pb: 2 }}>
                                             <Button
                                                 size="small"
                                                 variant="contained"
@@ -87,6 +117,15 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                                     handleAgregar(producto)
                                                 }
                                                 fullWidth
+                                                sx={{
+                                                    fontWeight: 600,
+                                                    textTransform: "none",
+                                                    borderRadius: 2,
+                                                    bgcolor: "InfoText",
+                                                    "&:hover": {
+                                                        bgcolor: "primary.dark",
+                                                    },
+                                                }}
                                             >
                                                 Agregar
                                             </Button>
