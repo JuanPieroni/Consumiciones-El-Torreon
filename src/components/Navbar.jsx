@@ -12,7 +12,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu"
 import { Link } from "react-router-dom"
 
-const Navbar = () => {
+const NavBar = () => {
     const [anchorEl, setAnchorEl] = React.useState(null)
 
     const handleMenuOpen = (event) => {
@@ -92,4 +92,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default NavBar
