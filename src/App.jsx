@@ -111,7 +111,7 @@ const App = () => {
 
     return (
         <>
-            <Navbar />
+            <NavBar />
             <Routes>
                 <Route
                     path="/"
