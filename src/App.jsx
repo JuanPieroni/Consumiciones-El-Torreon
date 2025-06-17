@@ -124,6 +124,8 @@ const App = () => {
                                     variant="h4"
                                     align="center"
                                     gutterBottom
+                                    sx={{ marginTop: 2 }}
+                                    color="primary"
                                 >
                                     Consumos El Torreon III
                                 </Typography>
