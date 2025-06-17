@@ -53,7 +53,11 @@ const App = () => {
         const total =
             consumos[nombre]?.reduce((acc, prod) => acc + prod.precio, 0) || 0
         alert(`${nombre} ya abonó la suma de $${total}`)
-        setPagos((prev) => [...prev, { nombre, total }])
+        setPagos((prev) => [
+            ...prev,
+            { nombre, total, consumos: consumos[nombre] || [] },
+        ])
+
         setPersonas((prev) => prev.filter((p) => p !== nombre))
         setConsumos((prev) => {
             const { [nombre]: _, ...resto } = prev
