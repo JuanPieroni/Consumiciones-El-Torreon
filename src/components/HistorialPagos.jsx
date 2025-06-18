@@ -37,7 +37,7 @@ const HistorialPagos = ({ pagos, productos, limpiarLocalStorage }) => {
         if (confirmacion.isConfirmed) {
             localStorage.removeItem("pagos")
             limpiarLocalStorage()
-            navigate(0)
+            navigate("/")
             Swal.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",
