@@ -31,7 +31,6 @@ const SelectorPersona = ({
             setPersonaSeleccionada(nombre)
         } else {
             Swal.fire({
-                 
                 text: "Ingresa un nombre válido",
                 icon: "error",
                 confirmButtonText: "Cool",
@@ -65,19 +64,32 @@ const SelectorPersona = ({
                     Agregar
                 </Button>
             </Stack>
-<Typography variant="subtitle1" gutterBottom align="center" marginBottom={2}>
-  {personaSeleccionada ? (
-    <>
-      Agregando consumos a <span style={{fontWeight: "bold"}}>:</span> {" "}
-      <span style={{ padding: "5px" , color: "#1976d2", fontWeight: "bold", border : "1px solid black",  borderRadius: "5px" }}>
-        {personaSeleccionada}
-      </span>
-    </>
-  ) : (
-    "Selecciona una persona"
-  )}
-</Typography>
-
+            <Typography
+                variant="subtitle1"
+                gutterBottom
+                align="center"
+                marginBottom={2}
+            >
+                {personaSeleccionada ? (
+                    <>
+                        Agregando consumos a{" "}
+                        <span style={{ fontWeight: "bold" }}>:</span>{" "}
+                        <span
+                            style={{
+                                padding: "5px",
+                                color: "#1976d2",
+                                fontWeight: "bold",
+                              
+                            
+                            }}
+                        >
+                            {personaSeleccionada}
+                        </span>
+                    </>
+                ) : (
+                    "Selecciona una persona"
+                )}
+            </Typography>
 
             <Grid container spacing={2} justifyContent="center">
                 {personas.map((persona) => {
@@ -87,11 +99,16 @@ const SelectorPersona = ({
                             <Card
                                 onClick={() => setPersonaSeleccionada(persona)}
                                 sx={{
-                                    cursor: "pointer",
                                     borderRadius: 2,
 
                                     bgcolor: isSelected
-                                        ? "primary.light"
+                                        ? {
+                                              padding: "5px",
+                                              backgroundColor: "hsla(189, 60.90%, 66.90%, 0.51)",
+
+                                              
+                                          
+                                          }
                                         : "background.paper",
 
                                     transition: "all 0.3s",

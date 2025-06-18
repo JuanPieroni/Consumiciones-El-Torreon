@@ -26,7 +26,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
 
     return (
         <div style={{ padding: "1rem" }}>
-            <Typography variant="h5" gutterBottom align="center">
+            <Typography variant="h5" gutterBottom align="center" sx={{ mt: 5 }}>
                 Resumen de consumos
             </Typography>
 
@@ -55,8 +55,25 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                 >
-                                    <Typography variant="h6">
-                                        {persona} - ${total}
+                                    <Typography
+                                        sx={{
+                                            flexShrink: 0,
+
+                                            fontSize: "1.2rem",
+
+                                            letterSpacing: "0.05em",
+                                            textShadow:
+                                                "1px 1px 2px rgba(0,0,0,0.1)",
+                                            marginRight: "10px",
+                                            marginLeft: "10px",
+                                            padding: "5px",
+                                            borderRadius: "5px",
+                                            backgroundColor:
+                                                " rgb(237, 236, 217)", // color de fondo claro
+                                        }}
+                                        variant="h6"
+                                    >
+                                        {persona}  -   ${total}
                                     </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
@@ -115,7 +132,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                                                                 overflow:
                                                                                     "hidden",
                                                                                 textOverflow:
-                                                                                    "ellipsis",
+                                                                                    "clip",
                                                                             }}
                                                                         >
                                                                             {
