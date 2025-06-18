@@ -220,7 +220,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
             )}
 
             <Typography
-                variant="h6"
+                variant="h8"
                 align="left"
                 sx={{ mt: 3, fontWeight: "bold" }}
             >
@@ -228,7 +228,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
             </Typography>
             <Divider sx={{ my: 2 }} />
             <Typography
-                variant="h8"
+                variant="h6"
                 align="left"
                 sx={{ mt: 3, fontWeight: "bold" }}
             >
