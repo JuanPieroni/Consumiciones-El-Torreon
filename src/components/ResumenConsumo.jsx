@@ -11,11 +11,12 @@ import {
     Button,
     Divider,
     Grid,
+    Box,
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import DeleteIcon from "@mui/icons-material/Delete"
 import PaidIcon from "@mui/icons-material/Paid"
- 
+
 const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
     const granTotal = Object.values(consumos).reduce(
         (acc, productos) =>
@@ -25,12 +26,16 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
 
     return (
         <div style={{ padding: "1rem" }}>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" gutterBottom align="center">
                 Resumen de consumos
             </Typography>
 
             {Object.keys(consumos).length === 0 ? (
-                <Typography color="text.secondary">
+                <Typography
+                    color="text.secondary"
+                    variant="body1"
+                    align="center"
+                >
                     No hay consumos aún
                 </Typography>
             ) : (
@@ -42,12 +47,16 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                         )
 
                         return (
-                            <Accordion key={persona} defaultExpanded={true}>
+                            <Accordion
+                                key={persona}
+                                defaultExpanded={true}
+                                sx={{ marginBottom: 2 }}
+                            >
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                 >
                                     <Typography variant="h6">
-                                        {persona} - Total: ${total}
+                                        {persona} - ${total}
                                     </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
@@ -84,7 +93,61 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                                             }
                                                         >
                                                             <ListItemText
-                                                                primary={`${nombre} - $${precio}`}
+                                                                primary={
+                                                                    <Box
+                                                                        sx={{
+                                                                            display:
+                                                                                "flex",
+                                                                            justifyContent:
+                                                                                "space-between",
+                                                                            alignItems:
+                                                                                "center",
+                                                                            width: "100%",
+                                                                            fontFamily:
+                                                                                "Playfair Display, serif", // o la fuente de carta
+                                                                        }}
+                                                                    >
+                                                                        <Typography
+                                                                            variant="body1"
+                                                                            sx={{
+                                                                                whiteSpace:
+                                                                                    "nowrap",
+                                                                                overflow:
+                                                                                    "hidden",
+                                                                                textOverflow:
+                                                                                    "ellipsis",
+                                                                            }}
+                                                                        >
+                                                                            {
+                                                                                nombre
+                                                                            }
+                                                                        </Typography>
+
+                                                                        <Box
+                                                                            component="span"
+                                                                            sx={{
+                                                                                flexGrow: 1,
+                                                                                borderBottom:
+                                                                                    "1px dotted #ccc",
+                                                                                mx: 2,
+                                                                                height: "0.8em",
+                                                                            }}
+                                                                        />
+
+                                                                        <Typography
+                                                                            variant="body1"
+                                                                            sx={{
+                                                                                whiteSpace:
+                                                                                    "nowrap",
+                                                                            }}
+                                                                        >
+                                                                            $
+                                                                            {
+                                                                                precio
+                                                                            }
+                                                                        </Typography>
+                                                                    </Box>
+                                                                }
                                                             />
                                                         </ListItem>
                                                     )
@@ -146,7 +209,6 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                                         Total: ${total}
                                                     </Typography>
                                                 </Grid>
-                                             
                                             </Grid>
                                         </>
                                     )}
@@ -159,10 +221,18 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
 
             <Typography
                 variant="h6"
-                align="right"
+                align="left"
                 sx={{ mt: 3, fontWeight: "bold" }}
             >
-                Gran Total: ${granTotal}
+                Total: ${granTotal} - 10% ${granTotal * 0.1}
+            </Typography>
+            <Divider sx={{ my: 2 }} />
+            <Typography
+                variant="h8"
+                align="left"
+                sx={{ mt: 3, fontWeight: "bold" }}
+            >
+                A pagar : ${granTotal - granTotal * 0.1}
             </Typography>
         </div>
     )

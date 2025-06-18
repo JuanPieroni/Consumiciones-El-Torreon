@@ -176,6 +176,7 @@ const App = () => {
                     element={
                         <section>
                             <HistorialPagos
+                                resetParcial={resetParcial}
                                 pagos={pagos}
                                 consumos={consumos}
                                 productos={productos}
@@ -185,7 +186,6 @@ const App = () => {
                 />
                 <Route path="/admin" element={<FormularioProducto />} />
             </Routes>
-            <button onClick={resetParcial}>Reset</button>
         </ThemeProvider>
     )
 }

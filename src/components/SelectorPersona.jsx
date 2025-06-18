@@ -34,7 +34,7 @@ const SelectorPersona = ({
                  
                 text: "Ingresa un nombre válido",
                 icon: "error",
-                confirmButtonText: "OK",
+                confirmButtonText: "Cool",
             })
         }
     }
@@ -67,9 +67,10 @@ const SelectorPersona = ({
             </Stack>
 
             <Typography variant="subtitle1" gutterBottom align="center">
+               
                 {personaSeleccionada
-                    ? `Agregando productos a: ${personaSeleccionada}`
-                    : "Seleccioná una persona"}
+                    ? `Agregando a:  ${personaSeleccionada}`
+                    : "Selecciona una persona"}
             </Typography>
 
             <Grid container spacing={2} justifyContent="center">

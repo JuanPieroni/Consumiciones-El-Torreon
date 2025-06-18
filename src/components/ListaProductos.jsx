@@ -64,9 +64,7 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
 
     return (
         <div>
-            <Typography variant="h5" gutterBottom>
-                Productos
-            </Typography>
+   
 
             {Object.entries(productosPorCategoria).map(([categoria, items]) => (
                 <Accordion
