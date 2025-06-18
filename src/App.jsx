@@ -143,7 +143,7 @@ const App = () => {
             localStorage.setItem(key, value)
         })
 
-        alert("LocalStorage limpiado, productos conservados!")
+       
     }
 
     return (
@@ -192,7 +192,7 @@ const App = () => {
                         <section>
                             <HistorialPagos
                                 pagos={pagos}
-                                consumos={consumos}
+                              
                                 productos={productos}
                                 limpiarLocalStorage={limpiarLocalStorage}
                             />

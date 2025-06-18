@@ -11,10 +11,10 @@ import {
     Stack,
     Divider,
     Box,
-    
 } from "@mui/material"
 import HomeIcon from "@mui/icons-material/Home"
- 
+import Swal from "sweetalert2"
+
 const Admin = () => {
     const navigate = useNavigate()
     const [clave, setClave] = useState("")
@@ -26,7 +26,11 @@ const Admin = () => {
         if (clave === claveCorrecta) {
             setAutorizado(true)
         } else {
-            alert("Clave incorrecta")
+            Swal.fire({
+               
+                text: "Contraseña incorrecta.",
+                icon: "error",
+            })
         }
     }
 
@@ -50,28 +54,25 @@ const Admin = () => {
                         </Button>
                     </Stack>
                 </Paper>
-                 <Box p={4} textAlign="center">
-           
-                <Button
-                    variant="contained"
-                    startIcon={<HomeIcon />}
-                    onClick={() => navigate("/")}
-                >
-                    Volver al inicio
-                </Button>
-            </Box>
+                <Box p={4} textAlign="center">
+                    <Button
+                        variant="contained"
+                        startIcon={<HomeIcon />}
+                        onClick={() => navigate("/")}
+                    >
+                        Volver al inicio
+                    </Button>
+                </Box>
             </Container>
         )
     }
 
     return (
         <Container maxWidth="md" sx={{ mt: 5 }}>
- 
             <FormularioProducto />
             <Divider sx={{ my: 4 }} />
             <EditarProductos />
-                     <Box p={4} textAlign="center">
-           
+            <Box p={4} textAlign="center">
                 <Button
                     variant="contained"
                     startIcon={<HomeIcon />}

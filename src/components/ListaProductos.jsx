@@ -11,6 +11,7 @@ import {
     CardActions,
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import Swal from "sweetalert2"
 
 const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
     const [productos, setProductos] = useState([])
@@ -31,7 +32,18 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
 
     const handleAgregar = (producto) => {
         if (!personaSeleccionada) {
-            alert("Seleccioná una persona primero")
+            
+            
+            Swal.fire({
+                //c¿como hacer para que este title se vea en minuscula ?
+                icon: "warning",
+                title: "Selecciona una persona",
+                text: "Por favor, selecciona una persona antes de agregar productos.",
+                confirmButtonText: "Aceptar",
+                customClass: {
+                    title: "text-lowercase", // clase personalizada para el título
+                },
+            })
             return
         }
         agregarProducto(producto)

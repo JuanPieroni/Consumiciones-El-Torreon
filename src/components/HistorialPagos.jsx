@@ -17,13 +17,35 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import DeleteIcon from "@mui/icons-material/Delete"
 import HomeIcon from "@mui/icons-material/Home"
 import { useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
 
-const HistorialPagos = ({ pagos, consumos, productos, limpiarLocalStorage }) => {
+const HistorialPagos = ({ pagos, productos, limpiarLocalStorage }) => {
     const navigate = useNavigate()
 
     const totalPagado = pagos?.reduce((acc, { total }) => acc + total, 0) || 0
 
-    // Render condicional: si no hay pagos, mostramos mensaje y botón
+    const handleBorrarHistorial = async () => {
+        const confirmacion = await Swal.fire({
+            title: "¿Eliminar historial?",
+            text: "Esta acción no se puede deshacer",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, borrar",
+            cancelButtonText: "Cancelar",
+        })
+
+        if (confirmacion.isConfirmed) {
+            localStorage.removeItem("pagos")
+            limpiarLocalStorage()
+            navigate(0)
+            Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+            })
+        }
+    }
+
     if (!pagos || pagos.length === 0) {
         return (
             <Box p={4} textAlign="center">
@@ -39,12 +61,6 @@ const HistorialPagos = ({ pagos, consumos, productos, limpiarLocalStorage }) => 
                 </Button>
             </Box>
         )
-    }
-
-    const handleBorrarHistorial = () => {
-        localStorage.removeItem("pagos")
-        limpiarLocalStorage()
-        navigate(0)
     }
 
     return (
@@ -126,4 +142,3 @@ const HistorialPagos = ({ pagos, consumos, productos, limpiarLocalStorage }) => 
 }
 
 export default HistorialPagos
-
