@@ -49,7 +49,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                         return (
                             <Accordion
                                 key={persona}
-                                defaultExpanded={true}
+                                defaultExpanded={false}
                                 sx={{ marginBottom: 2 }}
                             >
                                 <AccordionSummary

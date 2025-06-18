@@ -17,7 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import HomeIcon from "@mui/icons-material/Home"
 import { useNavigate } from "react-router-dom"
 
-const HistorialPagos = ({ pagos, setPagos, resetParcial }) => {
+const HistorialPagos = ({ pagos, setPagos, limpiarLocalStorage }) => {
     const navigate = useNavigate()
 
     if (pagos.length === 0) return null
@@ -92,7 +92,14 @@ const HistorialPagos = ({ pagos, setPagos, resetParcial }) => {
                 >
                     Eliminar historial de pagos
                 </Button>
-                <button onClick={resetParcial}>Reset</button>
+
+                <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={limpiarLocalStorage}
+                >
+                    Borrar Usuarios
+                </Button>
             </Box>
         </Box>
     )

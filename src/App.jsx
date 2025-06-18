@@ -3,17 +3,15 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import SelectorPersona from "./components/SelectorPersona"
 import ListaProductos from "./components/ListaProductos"
 import ResumenConsumo from "./components/ResumenConsumo"
-
 import HistorialPagos from "./components/HistorialPagos"
 import { supabase } from "./supabaseClient"
 import { useEffect, useState } from "react"
-import ContainerPaper from "./components/ContainerPaper"
-import { Typography } from "@mui/material"
-import FormularioProducto from "./components/FormularioProducto"
 import NavBar from "./components/NavBar"
 import Swal from "sweetalert2"
 import { ThemeProvider, CssBaseline } from "@mui/material"
 import theme from "./theme"
+import Admin from "./components/Admin"
+import Button from "@mui/material/Button"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -21,12 +19,23 @@ const App = () => {
         return personasGuardadas ? JSON.parse(personasGuardadas) : []
     })
 
-    const [consumos, setConsumos] = useState({})
+    const [consumos, setConsumos] = useState(() => {
+        const consumosGuardados = localStorage.getItem("consumos")
+        return consumosGuardados ? JSON.parse(consumosGuardados) : []
+    })
 
     const [pagos, setPagos] = useState(() => {
         return JSON.parse(localStorage.getItem("pagos")) || []
     })
+    // Guardar personas en localStorage cada vez que cambian
+    useEffect(() => {
+        localStorage.setItem("personas", JSON.stringify(personas))
+    }, [personas])
 
+    // Guardar consumos en localStorage cada vez que cambian
+    useEffect(() => {
+        localStorage.setItem("consumos", JSON.stringify(consumos))
+    }, [consumos])
     const [productos, setProductos] = useState([])
 
     const [personaSeleccionada, setPersonaSeleccionada] = useState()
@@ -117,20 +126,25 @@ const App = () => {
             }
         })
     }
-    const eliminarPersonaDelListado = (nombre) => {
-        setPersonas((prev) => prev.filter((p) => p !== nombre))
-    }
-    const resetParcial = () => {
-        if (
-            window.confirm(
-                "¿Seguro que querés borrar personas, consumos y pagos?"
-            )
-        ) {
-            setPersonas([])
-            setConsumos({})
-            setPagos([])
-            setPersonaSeleccionada(undefined)
-        }
+    const limpiarLocalStorage = () => {
+        const claveProductos = "productos" // poné la clave que usás para los productos en localStorage
+        const temp = {}
+
+        // Guardar solo lo que quieras conservar
+        Object.keys(localStorage).forEach((key) => {
+            if (key === claveProductos) {
+                temp[key] = localStorage.getItem(key)
+            }
+        })
+
+        localStorage.clear() // borra todo
+
+        // Restaurar lo que querés conservar
+        Object.entries(temp).forEach(([key, value]) => {
+            localStorage.setItem(key, value)
+        })
+
+        alert("LocalStorage limpiado, productos conservados!")
     }
 
     return (
@@ -165,6 +179,9 @@ const App = () => {
                                     consumos={consumos}
                                     eliminarProducto={eliminarProducto}
                                     eliminarPersona={eliminarPersona}
+                                    personaSeleccionada={personaSeleccionada}
+                                     
+                                    pagos={pagos}
                                 />
                             </section>
                         </>
@@ -176,16 +193,17 @@ const App = () => {
                     element={
                         <section>
                             <HistorialPagos
-                                resetParcial={resetParcial}
                                 pagos={pagos}
                                 consumos={consumos}
                                 productos={productos}
+                                limpiarLocalStorage={limpiarLocalStorage}
                             />
                         </section>
                     }
                 />
-                <Route path="/admin" element={<FormularioProducto />} />
+                <Route path="/admin" element={<Admin />} />
             </Routes>
+
         </ThemeProvider>
     )
 }

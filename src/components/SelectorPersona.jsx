@@ -65,13 +65,19 @@ const SelectorPersona = ({
                     Agregar
                 </Button>
             </Stack>
+<Typography variant="subtitle1" gutterBottom align="center">
+  {personaSeleccionada ? (
+    <>
+      Agregar consumos a:{" "}
+      <span style={{ color: "#1976d2", fontWeight: "bold" }}>
+        {personaSeleccionada}
+      </span>
+    </>
+  ) : (
+    "Selecciona una persona"
+  )}
+</Typography>
 
-            <Typography variant="subtitle1" gutterBottom align="center">
-               
-                {personaSeleccionada
-                    ? `Agregando a:  ${personaSeleccionada}`
-                    : "Selecciona una persona"}
-            </Typography>
 
             <Grid container spacing={2} justifyContent="center">
                 {personas.map((persona) => {
