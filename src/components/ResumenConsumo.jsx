@@ -218,11 +218,12 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                     })}
                 </div>
             )}
+            <Divider sx={{ my: 2 }} />
 
             <Typography
                 variant="h8"
                 align="left"
-                sx={{ mt: 3, fontWeight: "bold" }}
+                sx={{ mt: 3, fontWeight: "bold", margin: "5px" }}
             >
                 Total: ${granTotal} - 10% ${granTotal * 0.1}
             </Typography>
@@ -230,7 +231,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
             <Typography
                 variant="h6"
                 align="left"
-                sx={{ mt: 3, fontWeight: "bold" }}
+                sx={{ mt: 3, fontWeight: "bold", margin: "5px" }}
             >
                 A pagar : ${granTotal - granTotal * 0.1}
             </Typography>
