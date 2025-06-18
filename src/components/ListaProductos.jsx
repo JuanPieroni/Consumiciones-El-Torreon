@@ -49,9 +49,14 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
         if (isExpanded) {
             // espera un poco para que se aplique la animación del Accordion
             setTimeout(() => {
-                const element = document.getElementById(`accordion-${categoria}`)
+                const element = document.getElementById(
+                    `accordion-${categoria}`
+                )
                 if (element) {
-                    element.scrollIntoView({ behavior: "smooth", block: "start" })
+                    element.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    })
                 }
             }, 150)
         }
@@ -97,28 +102,27 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                 >
                                     <Card
                                         sx={{
-                                            //hacer mas chico el card
-                                           
                                             height: "100%",
-
-                                            
-
                                             border: "1px solid #e0e0e0",
-
-                                            
-
                                             borderRadius: 3,
                                             boxShadow:
                                                 "0 2px 10px rgba(0,0,0,0.08)",
                                             transition:
-                                                "transform 0.2s ease-in-out",
-                                            "&:hover": {
-                                                transform: "scale(1.03)",
-                                            },
+                                                "transform 0.2s ease, background-color 0.15s",
                                             display: "flex",
                                             flexDirection: "column",
                                             justifyContent: "space-between",
                                             textAlign: "center",
+                                            cursor: "pointer",
+                                            "&:hover": {
+                                                transform: "scale(1.03)",
+                                                backgroundColor: "#f0f0f0",
+                                            },
+                                            "&:active": {
+                                                backgroundColor: "#e0f7fa", // feedback táctil para móviles
+                                            },
+                                            minHeight: 100, // altura mínima
+                                            maxHeight: 130, // altura máxima (todas iguales)
                                         }}
                                     >
                                         <CardContent
@@ -128,35 +132,38 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                                 flexDirection: "column",
                                                 alignItems: "center",
                                                 justifyContent: "center",
-                                                cursor: "pointer",
+                                                px: 1,
+                                                py: 2,
                                             }}
                                             onClick={() =>
                                                 handleAgregar(producto)
                                             }
                                         >
                                             <Typography
-                                                variant="subtitle1"
+                                                variant="body1"
                                                 sx={{
                                                     fontWeight: 600,
-                                                    fontSize: "0.8rem",
-                                                    mb: 1,
+                                                    fontSize: "0.75rem",
+                                                    mb: 0.5,
                                                     color: "text.primary",
+                                                    textAlign: "center",
+                                                    lineHeight: 1.2,
+                                                    bold: true,
                                                 }}
                                             >
                                                 {producto.nombre}
                                             </Typography>
                                             <Typography
-                                                variant="body2"
+                                                variant="h6"
                                                 sx={{
-                                                    color: "text.secondary",
-                                                    fontSize: "0.5rem",
-                                                    mb: 1,
+                                                    color: "#43a047", // verde fuerte
+                                                    fontWeight: "bold",
+                                                    fontSize: "1rem",
                                                 }}
                                             >
                                                 ${producto.precio}
                                             </Typography>
                                         </CardContent>
-                                        <CardActions sx={{ px: 2, pb: 2 }}></CardActions>
                                     </Card>
                                 </Grid>
                             ))}

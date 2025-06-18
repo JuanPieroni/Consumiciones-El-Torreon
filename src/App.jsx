@@ -12,6 +12,9 @@ import { Typography } from "@mui/material"
 import FormularioProducto from "./components/FormularioProducto"
 import NavBar from "./components/NavBar"
 import Swal from "sweetalert2"
+import { ThemeProvider, CssBaseline } from "@mui/material"
+import theme from "./theme"
+
 const App = () => {
     const [personas, setPersonas] = useState(() => {
         const personasGuardadas = localStorage.getItem("personas")
@@ -67,7 +70,7 @@ const App = () => {
             icon: "success",
             title: `${nombre} ya abonó la suma de $${total}`,
         })
-        
+
         setPagos((prev) => [
             ...prev,
             { nombre, total, consumos: consumos[nombre] || [] },
@@ -131,7 +134,8 @@ const App = () => {
     }
 
     return (
-        <>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
             <NavBar />
             <Routes>
                 <Route
@@ -182,7 +186,7 @@ const App = () => {
                 <Route path="/admin" element={<FormularioProducto />} />
             </Routes>
             <button onClick={resetParcial}>Reset</button>
-        </>
+        </ThemeProvider>
     )
 }
 
