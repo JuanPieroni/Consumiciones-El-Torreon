@@ -1,68 +1,87 @@
-import React, { useState, useEffect } from "react"
-import { TextField, Button, Paper, Typography, Box } from "@mui/material"
+import React, { useState } from "react"
 import FormularioProducto from "./FormularioProducto"
-
-const CLAVE_CORRECTA = "torreon123"
-
+import EditarProductos from "./EditarProductos"
+import { useNavigate } from "react-router-dom"
+import {
+    Container,
+    Paper,
+    TextField,
+    Button,
+    Typography,
+    Stack,
+    Divider,
+    Box,
+    
+} from "@mui/material"
+import HomeIcon from "@mui/icons-material/Home"
+ 
 const Admin = () => {
+    const navigate = useNavigate()
     const [clave, setClave] = useState("")
     const [autorizado, setAutorizado] = useState(false)
 
-    // Revisar si ya está logueado antes (por localStorage)
-    useEffect(() => {
-        const autorizadoAntes = localStorage.getItem("adminAutorizado")
-        if (autorizadoAntes === "true") {
-            setAutorizado(true)
-        }
-    }, [])
+    const claveCorrecta = "2736" // Cambiala por la tuya
 
     const handleLogin = () => {
-        if (clave === CLAVE_CORRECTA) {
+        if (clave === claveCorrecta) {
             setAutorizado(true)
-            localStorage.setItem("adminAutorizado", "true")
         } else {
             alert("Clave incorrecta")
         }
     }
 
-    const handleLogout = () => {
-        setAutorizado(false)
-        localStorage.removeItem("adminAutorizado")
-    }
-
     if (!autorizado) {
         return (
-            <Paper elevation={3} sx={{ p: 4, m: 4, textAlign: "center" }}>
-                <Typography variant="h5" gutterBottom>
-                    Acceso restringido
-                </Typography>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 2, maxWidth: 300, margin: "0 auto" }}>
-                    <TextField
-                        type="password"
-                        label="Ingresá la clave"
-                        value={clave}
-                        onChange={(e) => setClave(e.target.value)}
-                        fullWidth
-                    />
-                    <Button variant="contained" color="primary" onClick={handleLogin}>
-                        Ingresar
-                    </Button>
-                </Box>
-            </Paper>
+            <Container maxWidth="sm" sx={{ mt: 5 }}>
+                <Paper elevation={3} sx={{ p: 4 }}>
+                    <Typography variant="h5" gutterBottom>
+                        Acceso restringido
+                    </Typography>
+                    <Stack spacing={2}>
+                        <TextField
+                            type="password"
+                            label="Ingresá la clave"
+                            value={clave}
+                            onChange={(e) => setClave(e.target.value)}
+                            fullWidth
+                        />
+                        <Button variant="contained" onClick={handleLogin}>
+                            Ingresar
+                        </Button>
+                    </Stack>
+                </Paper>
+                 <Box p={4} textAlign="center">
+           
+                <Button
+                    variant="contained"
+                    startIcon={<HomeIcon />}
+                    onClick={() => navigate("/")}
+                >
+                    Volver al inicio
+                </Button>
+            </Box>
+            </Container>
         )
     }
 
     return (
-        <Box sx={{ p: 2 }}>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-                <Button variant="outlined" color="error" onClick={handleLogout}>
-                    Cerrar sesión admin
+        <Container maxWidth="md" sx={{ mt: 5 }}>
+ 
+            <FormularioProducto />
+            <Divider sx={{ my: 4 }} />
+            <EditarProductos />
+                     <Box p={4} textAlign="center">
+           
+                <Button
+                    variant="contained"
+                    startIcon={<HomeIcon />}
+                    onClick={() => navigate("/")}
+                >
+                    Volver al inicio
                 </Button>
             </Box>
-            <FormularioProducto />
-        </Box>
+        </Container>
     )
 }
 
 export default Admin
-

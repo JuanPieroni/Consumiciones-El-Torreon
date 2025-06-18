@@ -46,7 +46,7 @@ const SelectorPersona = ({
             sx={{ bgcolor: "#f9f9f9", borderRadius: 3, boxShadow: 3 }}
         >
             <Typography variant="h5" align="center" gutterBottom>
-                Agregar o seleccionar persona
+                Agregar Persona
             </Typography>
 
             <Stack spacing={2} direction={{ xs: "column", sm: "row" }} mb={3}>
@@ -65,11 +65,11 @@ const SelectorPersona = ({
                     Agregar
                 </Button>
             </Stack>
-<Typography variant="subtitle1" gutterBottom align="center">
+<Typography variant="subtitle1" gutterBottom align="center" marginBottom={2}>
   {personaSeleccionada ? (
     <>
-      Agregar consumos a:{" "}
-      <span style={{ color: "#1976d2", fontWeight: "bold" }}>
+      Agregando consumos a <span style={{fontWeight: "bold"}}>:</span> {" "}
+      <span style={{ padding: "5px" , color: "#1976d2", fontWeight: "bold", border : "1px solid black",  borderRadius: "5px" }}>
         {personaSeleccionada}
       </span>
     </>

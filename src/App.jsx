@@ -11,7 +11,6 @@ import Swal from "sweetalert2"
 import { ThemeProvider, CssBaseline } from "@mui/material"
 import theme from "./theme"
 import Admin from "./components/Admin"
-import Button from "@mui/material/Button"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -180,7 +179,6 @@ const App = () => {
                                     eliminarProducto={eliminarProducto}
                                     eliminarPersona={eliminarPersona}
                                     personaSeleccionada={personaSeleccionada}
-                                     
                                     pagos={pagos}
                                 />
                             </section>
@@ -203,7 +201,6 @@ const App = () => {
                 />
                 <Route path="/admin" element={<Admin />} />
             </Routes>
-
         </ThemeProvider>
     )
 }

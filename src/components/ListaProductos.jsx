@@ -64,8 +64,6 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
 
     return (
         <div>
-   
-
             {Object.entries(productosPorCategoria).map(([categoria, items]) => (
                 <Accordion
                     key={categoria}
