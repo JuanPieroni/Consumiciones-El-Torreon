@@ -27,7 +27,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
 
     return (
         <div  >
-            <Typography variant="h5" gutterBottom align="center" sx={{ mt: 5 }}>
+            <Typography variant="h5" gutterBottom align="center" sx={{ mt: 5  }}>
                 Resumen de consumos
             </Typography>
             {Object.keys(consumos).length === 0 ? (
@@ -236,7 +236,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                 </div>
             )}
             <Divider sx={{ my: 2 }} />
-        <TotalAPagar granTotal={granTotal} />
+        <TotalAPagar  granTotal={granTotal} />
         </div>
     )
 }

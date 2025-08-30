@@ -37,15 +37,15 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
 
     return (
         <Paper sx={{ p: 3, m: 2 }}>
-            <Typography variant="h5" gutterBottom>
+          {/*   <Typography variant="h5" align="center" gutterBottom>
                 Buscar productos
             </Typography>
-
+ */}
             <TextField
-                label="Buscar producto"
+                label="Buscar producto o categoria"
                 variant="outlined"
                 fullWidth
-                sx={{ mb: 3 }}
+          
                 value={filtro}
                 onChange={(e) => setFiltro(e.target.value)}
             />
