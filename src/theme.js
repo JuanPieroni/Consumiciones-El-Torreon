@@ -1,10 +1,13 @@
 // theme.js
 import { createTheme } from "@mui/material/styles"
 import "@fontsource/cinzel"
+import "@fontsource/playfair-display"
+import "@fontsource/cormorant-garamond"
+import "@fontsource/libre-baskerville"
 
 const theme = createTheme({
     typography: {
-        fontFamily: `"Cinzel", serif`,
+        fontFamily: `"Cinzel",   serif`,
         h4: {
             fontWeight: 700,
             letterSpacing: "0.5px",

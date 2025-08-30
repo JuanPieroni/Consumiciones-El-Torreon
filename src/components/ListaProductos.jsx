@@ -76,6 +76,7 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
 
     return (
         <div>
+           <Typography variant="h6" gutterBottom align="center" sx={{ mt: 5 }}> CARTA</Typography>
             {Object.entries(productosPorCategoria).map(([categoria, items]) => (
                 <Accordion
                     key={categoria}

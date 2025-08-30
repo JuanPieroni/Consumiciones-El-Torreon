@@ -51,7 +51,7 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
             />
 
             {filtro.trim() && productosFiltrados.length > 0 ? (
-                <Stack spacing={2}>
+                <Stack spacing={0.5}>
                     {productosFiltrados.map((prod) => (
                         <Card key={prod.id}>
                             <CardContent>
@@ -70,7 +70,7 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                                 {personaSeleccionada && (
                                     <Button
                                         variant="contained"
-                                        sx={{ mt: 2 }}
+                                        sx={{ mt: 1 }}
                                         onClick={() => agregarProducto(prod)}
                                     >
                                         Agregar a {personaSeleccionada}

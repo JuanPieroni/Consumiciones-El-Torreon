@@ -26,11 +26,10 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
     )
 
     return (
-        <div style={{ padding: "1rem" }}>
+        <div  >
             <Typography variant="h5" gutterBottom align="center" sx={{ mt: 5 }}>
                 Resumen de consumos
             </Typography>
-            <TotalAPagar granTotal={granTotal} />
             {Object.keys(consumos).length === 0 ? (
                 <Typography
                     color="text.secondary"
@@ -237,22 +236,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                 </div>
             )}
             <Divider sx={{ my: 2 }} />
-
-            {/*   <Typography
-                variant="h8"
-                align="left"
-                sx={{ mt: 3, fontWeight: "bold", margin: "5px" }}
-            >
-                Total: ${granTotal} - 10% ${granTotal * 0.1}
-            </Typography>
-            <Divider sx={{ my: 2 }} />
-            <Typography
-                variant="h6"
-                align="left"
-                sx={{ mt: 3, fontWeight: "bold", margin: "5px" }}
-            >
-                A pagar : ${granTotal - granTotal * 0.1}
-            </Typography> */}
+        <TotalAPagar granTotal={granTotal} />
         </div>
     )
 }
