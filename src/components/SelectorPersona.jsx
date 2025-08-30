@@ -24,6 +24,7 @@ const SelectorPersona = ({
     const handleAgregar = () => {
         // uppercase all letters
         const nombre = nombreInput.trim().toUpperCase()
+        console.log(nombre);
         if (nombre && !personas.includes(nombre)) {
             agregarPersona(nombre)
             setNombreInput("")

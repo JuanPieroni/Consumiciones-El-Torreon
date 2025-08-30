@@ -11,6 +11,7 @@ import Swal from "sweetalert2"
 import { ThemeProvider, CssBaseline } from "@mui/material"
 import theme from "./theme"
 import Admin from "./components/Admin"
+import BuscarProducto from './components/BuscarProducto.jsx'
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -142,8 +143,6 @@ const App = () => {
         Object.entries(temp).forEach(([key, value]) => {
             localStorage.setItem(key, value)
         })
-
-       
     }
 
     return (
@@ -164,6 +163,12 @@ const App = () => {
                                         setPersonaSeleccionada
                                     }
                                     eliminarPersona={eliminarPersona}
+                                />
+                            </section>
+                            <section>
+                                <BuscarProducto
+                                    personaSeleccionada={personaSeleccionada}
+                                    agregarProducto={agregarProducto}
                                 />
                             </section>
                             <section>
@@ -192,7 +197,6 @@ const App = () => {
                         <section>
                             <HistorialPagos
                                 pagos={pagos}
-                              
                                 productos={productos}
                                 limpiarLocalStorage={limpiarLocalStorage}
                             />
