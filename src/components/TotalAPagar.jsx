@@ -17,7 +17,7 @@ const TotalAPagar = ({ granTotal }) => {
                 fontSize={27}
 
             >
-                Total c/propi: $ {granTotal}
+                Total c/propi:  $ {granTotal}
             </Typography>
         </Paper>
     )

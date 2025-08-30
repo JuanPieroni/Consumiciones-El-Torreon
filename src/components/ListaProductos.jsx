@@ -49,10 +49,14 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
         agregarProducto(producto)
     }
 
+    // Agrupar productos por categoría y subcategoría
     const productosPorCategoria = productos.reduce((acc, producto) => {
         const categoria = producto.categoria || "Otros"
-        if (!acc[categoria]) acc[categoria] = []
-        acc[categoria].push(producto)
+        const subcategoria = producto.subcategoria || "Sin subcategoría"
+        
+        if (!acc[categoria]) acc[categoria] = {}
+        if (!acc[categoria][subcategoria]) acc[categoria][subcategoria] = []
+        acc[categoria][subcategoria].push(producto)
         return acc
     }, {})
 
@@ -77,7 +81,7 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
     return (
         <div>
            <Typography variant="h6" gutterBottom align="center" sx={{ mt: 5 }}> CARTA</Typography>
-            {Object.entries(productosPorCategoria).map(([categoria, items]) => (
+            {Object.entries(productosPorCategoria).map(([categoria, subcategorias]) => (
                 <Accordion
                     key={categoria}
                     expanded={expanded === categoria}
@@ -99,84 +103,128 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                             {categoria.toUpperCase()}
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
-                        <Grid container spacing={2}>
-                            {items.map((producto) => (
-                                <Grid
-                                    item
-                                    xs={4}
-                                    sm={4}
-                                    md={3}
-                                    key={producto.id}
+                    <AccordionDetails
+                        onClick={(e) => {
+                            setExpanded(false)
+                        }}
+                        sx={{ p: 0 }}
+                    >
+                        {Object.entries(subcategorias).map(([subcategoria, items]) => (
+                            <Accordion
+                                key={`${categoria}-${subcategoria}`}
+                                sx={{
+                                    boxShadow: "none",
+                                    "&:before": { display: "none" },
+                                    backgroundColor: "#f9f9f9"
+                                }}
+                            >
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    onClick={(e) => e.stopPropagation()}
+                                    sx={{ minHeight: 48 }}
                                 >
-                                    <Card
-                                        sx={{
-                                            height: "100%",
-                                            border: "1px solid #e0e0e0",
-                                            borderRadius: 3,
-                                            boxShadow:
-                                                "0 2px 10px rgba(0,0,0,0.08)",
-                                            transition:
-                                                "transform 0.2s ease, background-color 0.15s",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            justifyContent: "space-between",
-                                            textAlign: "center",
-                                            cursor: "pointer",
-                                            "&:hover": {
-                                                transform: "scale(1.03)",
-                                                backgroundColor: "#f0f0f0",
-                                            },
-                                            "&:active": {
-                                                backgroundColor: "#e0f7fa", // feedback táctil para móviles
-                                            },
-                                            minHeight: 100, // altura mínima
-                                            maxHeight: 130, // altura máxima (todas iguales)
+                                    <Typography 
+                                        variant="subtitle1" 
+                                        sx={{ 
+                                            color: 'primary.main',
+                                            fontWeight: 'bold'
                                         }}
                                     >
-                                        <CardContent
-                                            sx={{
-                                                flexGrow: 1,
-                                                display: "flex",
-                                                flexDirection: "column",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                px: 1,
-                                                py: 2,
-                                            }}
-                                            onClick={() =>
-                                                handleAgregar(producto)
-                                            }
-                                        >
-                                            <Typography
-                                                variant="body1"
-                                                sx={{
-                                                    fontWeight: 600,
-                                                    fontSize: "0.75rem",
-                                                    mb: 0.5,
-                                                    color: "text.primary",
-                                                    textAlign: "center",
-                                                    lineHeight: 1.2,
-                                                    bold: true,
-                                                }}
+                                        {subcategoria}
+                                    </Typography>
+                                </AccordionSummary>
+                                <AccordionDetails 
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        // Cerrar subcategoría al hacer click en cualquier lado
+                                        const accordion = e.currentTarget.closest('.MuiAccordion-root')
+                                        if (accordion) {
+                                            const summary = accordion.querySelector('.MuiAccordionSummary-root')
+                                            if (summary) summary.click()
+                                        }
+                                    }}
+                                >
+                                    <Grid container spacing={2}>
+                                        {items.map((producto) => (
+                                            <Grid
+                                                item
+                                                xs={4}
+                                                sm={4}
+                                                md={3}
+                                                key={producto.id}
                                             >
-                                                {producto.nombre}
-                                            </Typography>
-                                            <Typography
-                                                variant="h6"
-                                                sx={{
-                                                    color: "#43a047", // verde fuerte
-                                                    fontWeight: "bold",
-                                                    fontSize: "1rem",
-                                                }}
-                                            >
-                                                ${producto.precio}
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
+                                                <Card
+                                                    sx={{
+                                                        height: "100%",
+                                                        border: "1px solid #e0e0e0",
+                                                        borderRadius: 3,
+                                                        boxShadow:
+                                                            "0 2px 10px rgba(0,0,0,0.08)",
+                                                        transition:
+                                                            "transform 0.2s ease, background-color 0.15s",
+                                                        display: "flex",
+                                                        flexDirection: "column",
+                                                        justifyContent: "space-between",
+                                                        textAlign: "center",
+                                                        cursor: "pointer",
+                                                        "&:hover": {
+                                                            transform: "scale(1.03)",
+                                                            backgroundColor: "#f0f0f0",
+                                                        },
+                                                        "&:active": {
+                                                            backgroundColor: "#e0f7fa",
+                                                        },
+                                                        minHeight: 100,
+                                                        maxHeight: 130,
+                                                    }}
+                                                >
+                                                    <CardContent
+                                                        sx={{
+                                                            flexGrow: 1,
+                                                            display: "flex",
+                                                            flexDirection: "column",
+                                                            alignItems: "center",
+                                                            justifyContent: "center",
+                                                            px: 1,
+                                                            py: 2,
+                                                        }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            handleAgregar(producto)
+                                                        }}
+                                                    >
+                                                        <Typography
+                                                            variant="body1"
+                                                            sx={{
+                                                                fontWeight: 600,
+                                                                fontSize: "0.75rem",
+                                                                mb: 0.5,
+                                                                color: "text.primary",
+                                                                textAlign: "center",
+                                                                lineHeight: 1.2,
+                                                                bold: true,
+                                                            }}
+                                                        >
+                                                            {producto.nombre}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant="h6"
+                                                            sx={{
+                                                                color: "#43a047",
+                                                                fontWeight: "bold",
+                                                                fontSize: "1rem",
+                                                            }}
+                                                        >
+                                                            ${producto.precio}
+                                                        </Typography>
+                                                    </CardContent>
+                                                </Card>
+                                            </Grid>
+                                        ))}
+                                    </Grid>
+                                </AccordionDetails>
+                            </Accordion>
+                        ))}
                     </AccordionDetails>
                 </Accordion>
             ))}
