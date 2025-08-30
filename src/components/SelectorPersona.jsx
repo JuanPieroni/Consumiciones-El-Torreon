@@ -9,6 +9,8 @@ import {
     Grid,
     Stack,
 } from "@mui/material"
+import PersonAddIcon from "@mui/icons-material/PersonAdd"
+import GroupIcon from "@mui/icons-material/Group"
 import Swal from "sweetalert2"
 
 const SelectorPersona = ({
@@ -45,8 +47,23 @@ const SelectorPersona = ({
             m={2}
             sx={{ bgcolor: "#f9f9f9", borderRadius: 3, boxShadow: 3 }}
         >
-            <Typography variant="h5" align="center" gutterBottom>
-                Agregar Persona
+            <Typography 
+                variant="h5" 
+                align="center" 
+                gutterBottom
+                sx={{
+                    fontWeight: 'bold',
+                    color: 'primary.main',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2,
+                    mb: 3
+                }}
+            >
+                <PersonAddIcon sx={{ fontSize: '2rem' }} />
+                ★ Agregar Persona ★
+                <GroupIcon sx={{ fontSize: '2rem' }} />
             </Typography>
 
             <Stack spacing={2} direction={{ xs: "column", sm: "row" }} mb={3}>

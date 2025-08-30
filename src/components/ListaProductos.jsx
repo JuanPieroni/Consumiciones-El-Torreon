@@ -11,6 +11,8 @@ import {
     CardActions,
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu"
+import LocalDiningIcon from "@mui/icons-material/LocalDining"
 import Swal from "sweetalert2"
 
 const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
@@ -88,9 +90,24 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
 
     return (
         <div style={{ padding: "0.5rem" }}>
-            <Typography variant="h6" gutterBottom align="center" sx={{ mt: 5 }}>
-                {" "}
-                CARTA
+            <Typography 
+                variant="h5" 
+                gutterBottom 
+                align="center" 
+                sx={{ 
+                    mt: 5,
+                    mb: 3,
+                    fontWeight: 'bold',
+                    color: 'primary.main',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2
+                }}
+            >
+                <RestaurantMenuIcon sx={{ fontSize: '2rem' }} />
+                 CARTA 
+                <LocalDiningIcon sx={{ fontSize: '2rem' }} />
             </Typography>
             {Object.entries(productosPorCategoria).map(
                 ([categoria, subcategorias]) => (

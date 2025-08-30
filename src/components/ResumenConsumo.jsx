@@ -16,6 +16,8 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import DeleteIcon from "@mui/icons-material/Delete"
 import PaidIcon from "@mui/icons-material/Paid"
+import ReceiptIcon from "@mui/icons-material/Receipt"
+import SummarizeIcon from "@mui/icons-material/Summarize"
 import TotalAPagar from "./TotalAPagar"
 
 const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
@@ -27,8 +29,24 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
 
     return (
         <div  >
-            <Typography variant="h5" gutterBottom align="center" sx={{ mt: 5  }}>
-                Resumen de consumos
+            <Typography 
+                variant="h5" 
+                gutterBottom 
+                align="center" 
+                sx={{ 
+                    mt: 5,
+                    mb: 3,
+                    fontWeight: 'bold',
+                    color: 'primary.main',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2
+                }}
+            >
+                <ReceiptIcon sx={{ fontSize: '2rem' }} />
+                ❖ Resumen de Consumos ❖
+                <SummarizeIcon sx={{ fontSize: '2rem' }} />
             </Typography>
             {Object.keys(consumos).length === 0 ? (
                 <Typography
