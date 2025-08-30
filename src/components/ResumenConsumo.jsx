@@ -16,6 +16,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import DeleteIcon from "@mui/icons-material/Delete"
 import PaidIcon from "@mui/icons-material/Paid"
+import TotalAPagar from "./TotalAPagar"
 
 const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
     const granTotal = Object.values(consumos).reduce(
@@ -29,7 +30,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
             <Typography variant="h5" gutterBottom align="center" sx={{ mt: 5 }}>
                 Resumen de consumos
             </Typography>
-
+            <TotalAPagar granTotal={granTotal} />
             {Object.keys(consumos).length === 0 ? (
                 <Typography
                     color="text.secondary"
@@ -73,7 +74,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                         }}
                                         variant="h6"
                                     >
-                                        {persona}  -   ${total}
+                                        {persona} - ${total}
                                     </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
@@ -237,7 +238,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
             )}
             <Divider sx={{ my: 2 }} />
 
-            <Typography
+            {/*   <Typography
                 variant="h8"
                 align="left"
                 sx={{ mt: 3, fontWeight: "bold", margin: "5px" }}
@@ -251,7 +252,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                 sx={{ mt: 3, fontWeight: "bold", margin: "5px" }}
             >
                 A pagar : ${granTotal - granTotal * 0.1}
-            </Typography>
+            </Typography> */}
         </div>
     )
 }

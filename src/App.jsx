@@ -11,7 +11,8 @@ import Swal from "sweetalert2"
 import { ThemeProvider, CssBaseline } from "@mui/material"
 import theme from "./theme"
 import Admin from "./components/Admin"
-import BuscarProducto from './components/BuscarProducto.jsx'
+import BuscarProducto from "./components/BuscarProducto.jsx"
+import TotalAPagar from "./components/TotalAPagar.jsx"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -172,19 +173,19 @@ const App = () => {
                                 />
                             </section>
                             <section>
-                                <ListaProductos
-                                    productos={productos}
-                                    personaSeleccionada={personaSeleccionada}
-                                    agregarProducto={agregarProducto}
-                                />
-                            </section>
-                            <section>
                                 <ResumenConsumo
                                     consumos={consumos}
                                     eliminarProducto={eliminarProducto}
                                     eliminarPersona={eliminarPersona}
                                     personaSeleccionada={personaSeleccionada}
                                     pagos={pagos}
+                                />
+                            </section>
+                            <section>
+                                <ListaProductos
+                                    productos={productos}
+                                    personaSeleccionada={personaSeleccionada}
+                                    agregarProducto={agregarProducto}
                                 />
                             </section>
                         </>

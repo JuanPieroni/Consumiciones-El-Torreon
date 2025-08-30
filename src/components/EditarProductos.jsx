@@ -55,8 +55,8 @@ const EditarProductos = () => {
                     : productoOriginal.precio,
             categoria:
                 producto.categoria !== undefined
-                    ? producto.categoria
-                    : productoOriginal.categoria,
+                    ? producto.categoria.toLowerCase()
+                    : productoOriginal.categoria.toLowerCase(),
         }
 
         const { error } = await supabase
