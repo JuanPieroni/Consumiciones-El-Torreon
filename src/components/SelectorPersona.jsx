@@ -45,10 +45,10 @@ const SelectorPersona = ({
             p={2}
             m={2}
             sx={{
-                bgcolor: "#fffacd",
+                bgcolor: "#bcbcbccd",
                 borderRadius: 3,
                 boxShadow: 3,
-                border: "2px solid #ffd700",
+                border: "2px solid #a6a6a6ff",
             }}
         >
             <Typography
@@ -74,7 +74,11 @@ const SelectorPersona = ({
                         marginRight: window.innerWidth < 600 ? 13 : 20,
                     }}
                 />
-                <span style={{ fontSize: window.innerWidth < 600 ? '1.2rem' : '1.5rem' }}>
+                <span
+                    style={{
+                        fontSize: window.innerWidth < 600 ? "1.2rem" : "1.5rem",
+                    }}
+                >
                     Agregar Persona
                 </span>
                 <img
@@ -112,12 +116,12 @@ const SelectorPersona = ({
                 {personaSeleccionada ? (
                     <>
                         Agregando consumos a{" "}
-                        <span style={{ fontWeight: "bold" }}>:</span>{" "}
+                        <span style={{ fontWeight: "bolder" }}>:</span>{" "}
                         <span
                             style={{
                                 padding: "5px",
-                                color: "#1976d2",
-                                fontWeight: "bold",
+                                color: "#060606ff",
+                                fontWeight: "bolder",
                             }}
                         >
                             {personaSeleccionada}
@@ -142,7 +146,10 @@ const SelectorPersona = ({
                                         ? {
                                               padding: "5px",
                                               backgroundColor:
-                                                  "hsla(189, 60.90%, 66.90%, 0.51)",
+                                                  "hsla(8, 86%, 46%, 0.51)",
+                                              border: "1px solid black",
+                                              
+                                              
                                           }
                                         : "background.paper",
 

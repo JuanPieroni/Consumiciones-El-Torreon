@@ -200,7 +200,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                                     <Button
                                                         endIcon={<PaidIcon />}
                                                         variant="contained"
-                                                        color="success"
+                                                       
                                                         onClick={() =>
                                                             eliminarPersona(
                                                                 persona
@@ -216,6 +216,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                                                 "none",
                                                             fontSize: "0.8rem",
                                                             boxShadow: 2,
+                                                            backgroundColor:"hsla(145, 91%, 42%, 0.51)",
                                                         }}
                                                     >
                                                         Pagó

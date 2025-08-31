@@ -37,7 +37,8 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                 .includes(filtro.toLowerCase()) ||
             (prod.subcategoria || "")
                 .toLowerCase()
-                .includes(filtro.toLowerCase())
+                .includes(filtro.toLowerCase()) ||
+            (prod.precio || "").toString().includes(filtro)
     )
 
     return (
@@ -73,7 +74,10 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                                 </Typography>
                                 {personaSeleccionada && (
                                     <Button
-                                        variant="contained"
+                                        style={ {
+                                            backgroundColor : "hsla(8, 86%, 46%, 0.51)"
+                                        }}
+                                        variant="outlined"
                                         sx={{ mt: 1 }}
                                         onClick={() => agregarProducto(prod)}
                                     >
