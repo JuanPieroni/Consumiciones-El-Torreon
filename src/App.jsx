@@ -1,6 +1,7 @@
 // App.jsx
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import { useEffect, useState, lazy, Suspense, useCallback, useMemo } from "react"
+import { playSuccessSound } from "./utils/soundUtils"
 import SelectorPersona from "./components/SelectorPersona"
 import ListaProductos from "./components/ListaProductos"
 import ResumenConsumo from "./components/ResumenConsumo"
@@ -10,7 +11,7 @@ import Swal from "sweetalert2"
 import { ThemeProvider, CssBaseline } from "@mui/material"
 import theme from "./theme"
 import BuscarProducto from "./components/BuscarProducto.jsx"
-import TotalAPagar from "./components/TotalAPagar.jsx"
+ 
 
 // Lazy loading para rutas menos usadas
 const HistorialPagos = lazy(() => import("./components/HistorialPagos"))
@@ -117,6 +118,9 @@ const App = () => {
             const nuevoProducto = { ...producto, id: nuevoId }
             setProductos((prev) => [...prev, nuevoProducto])
         }
+
+        // Sonido de confirmación
+        playSuccessSound()
     }, [personaSeleccionada, productos])
 
     const eliminarProducto = (persona, index) => {
