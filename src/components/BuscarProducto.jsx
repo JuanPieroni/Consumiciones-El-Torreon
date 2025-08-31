@@ -43,10 +43,6 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
 
     return (
         <Paper sx={{ p: 3, m: 2 }}>
-            {/*   <Typography variant="h5" align="center" gutterBottom>
-                Buscar productos
-            </Typography>
- */}
             <TextField
                 label="Buscar producto o categoria"
                 variant="outlined"
@@ -70,8 +66,15 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                                     variant="body2"
                                     color="text.secondary"
                                 >
-                                    Categoría: {prod.categoria}
+                                   {prod.categoria}
                                 </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    {prod.subcategoria}
+                                </Typography>
+
                                 {personaSeleccionada && (
                                     <Button
                                         style={{
