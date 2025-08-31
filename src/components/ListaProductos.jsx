@@ -212,7 +212,7 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                                     <Typography
                                                         variant="h6"
                                                         sx={{
-                                                            color: "primary.main",
+                                                            color: "info.main",
                                                             fontWeight: "bold",
                                                             fontSize: "1rem",
                                                         }}
@@ -245,7 +245,7 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                             <Typography
                                                 variant="subtitle1"
                                                 sx={{
-                                                    color: "primary.main",
+                                                    color: "info.main",
                                                     fontWeight: "bold",
                                                 }}
                                             >
@@ -353,7 +353,7 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                                                 <Typography
                                                                     variant="h6"
                                                                     sx={{
-                                                                        color: "#43a047",
+                                                                        color: "info.main",
                                                                         fontWeight:
                                                                             "bold",
                                                                         fontSize:

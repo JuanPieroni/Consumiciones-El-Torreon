@@ -69,9 +69,9 @@ const SelectorPersona = ({
                 <img
                     src="/icons/dice.svg"
                     style={{
-                        width: window.innerWidth < 600 ? 25 : 45,
-                        height: window.innerWidth < 600 ? 25 : 45,
-                        marginRight: window.innerWidth < 600 ? 8 : 20,
+                        width: window.innerWidth < 600 ? 35 : 45,
+                        height: window.innerWidth < 600 ? 35 : 45,
+                        marginRight: window.innerWidth < 600 ? 13 : 20,
                     }}
                 />
                 <span style={{ fontSize: window.innerWidth < 600 ? '1.2rem' : '1.5rem' }}>
@@ -80,9 +80,9 @@ const SelectorPersona = ({
                 <img
                     src="/icons/dice.svg"
                     style={{
-                        width: window.innerWidth < 600 ? 25 : 45,
-                        height: window.innerWidth < 600 ? 25 : 45,
-                        marginLeft: window.innerWidth < 600 ? 8 : 20,
+                        width: window.innerWidth < 600 ? 35 : 45,
+                        height: window.innerWidth < 600 ? 35 : 45,
+                        marginLeft: window.innerWidth < 600 ? 13 : 20,
                     }}
                 />
             </Typography>

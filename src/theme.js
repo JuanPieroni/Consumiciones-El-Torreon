@@ -22,21 +22,24 @@ const theme = createTheme({
     },
     palette: {
         primary: {
-            main: "#1976d2", // Celeste principal
+            main: "#424242", // Gris oscuro vibrante
         },
         secondary: {
-            main: "#90a4ae", // Gris azulado suave
+            main: "#757575", // Gris medio
         },
         background: {
-            default: "#f5f7fa", // Gris muy claro con tinte azul
+            default: "#fafafa", // Gris muy claro
             paper: "#ffffff",
         },
         text: {
-            primary: "#37474f", // Gris oscuro azulado
-            secondary: "#546e7a", // Gris medio azulado
+            primary: "#212121", // Gris muy oscuro
+            secondary: "#616161", // Gris medio oscuro
         },
         warning: {
-            main: "#b0bec5", // Gris claro azulado
+            main: "#9e9e9e", // Gris claro
+        },
+        info: {
+            main: "#5e72e4", // Azul vibrante pero no muy fuerte
         },
     },
 })
