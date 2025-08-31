@@ -42,7 +42,16 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
     )
 
     return (
-        <Paper sx={{ p: 3, m: 2 }}>
+        <Paper
+            sx={{
+                p: 2,
+                m: 2,
+                bgcolor: "#bcbcbccd",
+                borderRadius: 3,
+                boxShadow: "0 2px 3px hsla(10, 5%, 46%, 0.51)",
+                border: "2px solid #a6a6a6ff",
+            }}
+        >
             <TextField
                 label="Buscar producto o categoria"
                 variant="outlined"
@@ -52,37 +61,63 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
             />
 
             {filtro.trim() && productosFiltrados.length > 0 ? (
-                <Stack spacing={0.5}>
+                <Stack spacing={1} sx={{ mt: 2 }}>
                     {productosFiltrados.map((prod) => (
-                        <Card key={prod.id}>
+                        <Card
+                            key={prod.id}
+                            sx={{
+                                backgroundColor:" hsla(90, 29%, 95%, 0.87)",
+                                border: "1px solid #e0e0e0",
+                                borderRadius: 3,
+                                boxShadow: "0 2px 3px hsla(10, 5%, 46%, 0.51)",
+                            }}
+                        >
                             <CardContent>
-                                <Typography variant="h6">
+                                <Typography
+                                    
+                                    variant="h7"
+                                    sx={{   fontWeight: "bold" }}>
+                                        
                                     {prod.nombre}
                                 </Typography>
-                                <Typography variant="body1">
-                                    Precio: ${prod.precio}
+                                <Typography
+                                    variant="body1"
+                                    sx={{
+                                        color: "info.main",
+                                        fontWeight: "bold",
+                                        fontSize: "0.8rem",
+                                    }}
+                                >
+                                    ${prod.precio}
                                 </Typography>
                                 <Typography
                                     variant="body2"
                                     color="text.secondary"
+                                    sx={{ fontWeight: "bold"}}
+                                   
                                 >
-                                   {prod.categoria}
+                                    {prod.categoria}
                                 </Typography>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                >
-                                    {prod.subcategoria}
-                                </Typography>
+                                {prod.subcategoria && (
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                            color: "text.secondary",
+                                            
+                                        }}
+                                    >
+                                        {prod.subcategoria}
+                                    </Typography>
+                                )}
 
                                 {personaSeleccionada && (
                                     <Button
-                                        style={{
-                                            backgroundColor:
-                                                "hsla(8, 86%, 46%, 0.51)",
+                                        variant="text"
+                                        sx={{
+                                            mt: 1,
+                                            color: "hsla(8, 86%, 46%, 0.51)",
+                                            border:"1px solid black"
                                         }}
-                                        variant="outlined"
-                                        sx={{ mt: 1 }}
                                         onClick={() => agregarProducto(prod)}
                                     >
                                         Agregar a {personaSeleccionada}
@@ -93,12 +128,14 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                     ))}
                 </Stack>
             ) : filtro.trim() ? (
-                <Typography variant="body1" color="text.secondary">
+                <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ mt: 2 }}
+                >
                     No se encontraron productos que coincidan.
                 </Typography>
-            ) : (
-                <p></p>
-            )}
+            ) : null}
         </Paper>
     )
 }
