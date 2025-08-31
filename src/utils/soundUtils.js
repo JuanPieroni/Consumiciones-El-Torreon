@@ -14,7 +14,7 @@ export const playSuccessSound = () => {
         oscillator.type = "triangle"
 
         // Volumen suave
-        gainNode.gain.setValueAtTime(0.02, audioContext.currentTime)
+        gainNode.gain.setValueAtTime(0.04, audioContext.currentTime)
        
 
         oscillator.start()
