@@ -39,7 +39,7 @@ const NavBar = () => {
                             alignItems: " center",
                         }}
                     />
-                    Consumos El Torreon III
+                   El Torreon III
                 </Typography>
 
                 {/* Botones visibles en pantallas grandes */}
