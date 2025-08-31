@@ -10,18 +10,15 @@ export const playSuccessSound = () => {
         gainNode.connect(audioContext.destination)
 
         // Configurar sonido: tono agudo y corto
-        oscillator.frequency.setValueAtTime(90, audioContext.currentTime)
-        oscillator.type = "square"
+        oscillator.frequency.setValueAtTime(500, audioContext.currentTime)
+        oscillator.type = "triangle"
 
         // Volumen suave
-        gainNode.gain.setValueAtTime(0.8, audioContext.currentTime)
-        gainNode.gain.exponentialRampToValueAtTime(
-            500,
-            audioContext.currentTime + 0.14
-        )
+        gainNode.gain.setValueAtTime(0.02, audioContext.currentTime)
+       
 
         oscillator.start()
-        oscillator.stop(audioContext.currentTime + 0.2)
+        oscillator.stop(audioContext.currentTime + 0.08)
 
         // Backup: vibración para móvil
         if (navigator.vibrate) {
