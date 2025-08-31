@@ -29,43 +29,24 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
 
     return (
         <div>
-                  <Typography
-                       variant="h5"
-                       align="center"
-                       gutterBottom
-                       sx={{
-                           fontWeight: "bold",
-                           color: "primary.main",
-                           display: "flex",
-                           alignItems: "center",
-                           justifyContent: "center",
-                           gap: 1,
-                           mb: 3,
-                           flexWrap: "wrap",
-                       }}
-                   >
-                       <img
-                       src="/icons/dice.svg"
-                           style={{
-                               width: 45,
-                               height: 45,
-                               marginRight: 20,
-                               verticalAlign: "middle",
-                               alignItems: " center",
-                           }}
-                       />
-                       Resumen de consumos
-                       <img
-                       src="/icons/dice.svg"
-                           style={{
-                               width: 45,
-                               height: 45,
-                               marginRight: 20,
-                               verticalAlign: "middle",
-                               alignItems: " center",
-                           }}
-                       />
-                   </Typography>
+            <Typography
+                variant="h5"
+                gutterBottom
+                align="center"
+                sx={{
+                    mt: 5,
+                    mb: 3,
+                    fontWeight: "bold",
+                    color: "primary.main",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 1,
+                    flexWrap: "wrap",
+                }}
+            >
+               ♦ Resumen de Consumos ♦
+            </Typography>
             {Object.keys(consumos).length === 0 ? (
                 <Typography
                     color="text.secondary"
@@ -219,7 +200,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                                     <Button
                                                         endIcon={<PaidIcon />}
                                                         variant="contained"
-                                                        color="secondary"
+                                                        color="success"
                                                         onClick={() =>
                                                             eliminarPersona(
                                                                 persona

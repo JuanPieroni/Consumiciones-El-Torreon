@@ -61,30 +61,28 @@ const SelectorPersona = ({
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: 1,
+                    gap: { xs: 0.5, sm: 1 },
                     mb: 3,
-                    flexWrap: "wrap",
+                    flexWrap: "nowrap",
                 }}
             >
                 <img
-                src="/icons/dice.svg"
+                    src="/icons/dice.svg"
                     style={{
-                        width: 45,
-                        height: 45,
-                        marginRight: 20,
-                        verticalAlign: "middle",
-                        alignItems: " center",
+                        width: window.innerWidth < 600 ? 25 : 45,
+                        height: window.innerWidth < 600 ? 25 : 45,
+                        marginRight: window.innerWidth < 600 ? 8 : 20,
                     }}
                 />
-                Agregar Persona
+                <span style={{ fontSize: window.innerWidth < 600 ? '1.2rem' : '1.5rem' }}>
+                    Agregar Persona
+                </span>
                 <img
-                src="/icons/dice.svg"
+                    src="/icons/dice.svg"
                     style={{
-                        width: 45,
-                        height: 45,
-                        marginRight: 20,
-                        verticalAlign: "middle",
-                        alignItems: " center",
+                        width: window.innerWidth < 600 ? 25 : 45,
+                        height: window.innerWidth < 600 ? 25 : 45,
+                        marginLeft: window.innerWidth < 600 ? 8 : 20,
                     }}
                 />
             </Typography>
