@@ -1,18 +1,20 @@
 // App.jsx
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+import { useEffect, useState, lazy, Suspense, useCallback, useMemo } from "react"
 import SelectorPersona from "./components/SelectorPersona"
 import ListaProductos from "./components/ListaProductos"
 import ResumenConsumo from "./components/ResumenConsumo"
-import HistorialPagos from "./components/HistorialPagos"
 import { supabase } from "./supabaseClient"
-import { useEffect, useState } from "react"
 import NavBar from "./components/NavBar"
 import Swal from "sweetalert2"
 import { ThemeProvider, CssBaseline } from "@mui/material"
 import theme from "./theme"
-import Admin from "./components/Admin"
 import BuscarProducto from "./components/BuscarProducto.jsx"
 import TotalAPagar from "./components/TotalAPagar.jsx"
+
+// Lazy loading para rutas menos usadas
+const HistorialPagos = lazy(() => import("./components/HistorialPagos"))
+const Admin = lazy(() => import("./components/Admin"))
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -55,12 +57,12 @@ const App = () => {
         fetchProductos()
     }, []) // solo se ejecuta una vez al inicio
 
-    const agregarPersona = (nombre) => {
+    const agregarPersona = useCallback((nombre) => {
         if (!personas.includes(nombre)) {
             setPersonas([...personas, nombre])
         }
         setPersonaSeleccionada(nombre)
-    }
+    }, [personas])
 
     const eliminarPersona = (nombre) => {
         const total =
@@ -96,7 +98,7 @@ const App = () => {
         }
     }
 
-    const agregarProducto = (producto) => {
+    const agregarProducto = useCallback((producto) => {
         if (!personaSeleccionada) return
         setConsumos((prev) => {
             const prevPersona = prev[personaSeleccionada] || []
@@ -115,7 +117,7 @@ const App = () => {
             const nuevoProducto = { ...producto, id: nuevoId }
             setProductos((prev) => [...prev, nuevoProducto])
         }
-    }
+    }, [personaSeleccionada, productos])
 
     const eliminarProducto = (persona, index) => {
         setConsumos((prev) => {
@@ -195,16 +197,25 @@ const App = () => {
                 <Route
                     path="/historial"
                     element={
-                        <section>
-                            <HistorialPagos
-                                pagos={pagos}
-                                productos={productos}
-                                limpiarLocalStorage={limpiarLocalStorage}
-                            />
-                        </section>
+                        <Suspense fallback={<div>Cargando...</div>}>
+                            <section>
+                                <HistorialPagos
+                                    pagos={pagos}
+                                    productos={productos}
+                                    limpiarLocalStorage={limpiarLocalStorage}
+                                />
+                            </section>
+                        </Suspense>
                     }
                 />
-                <Route path="/admin" element={<Admin />} />
+                <Route 
+                    path="/admin" 
+                    element={
+                        <Suspense fallback={<div>Cargando...</div>}>
+                            <Admin />
+                        </Suspense>
+                    } 
+                />
             </Routes>
         </ThemeProvider>
     )

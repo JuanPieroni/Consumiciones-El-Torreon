@@ -74,8 +74,9 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                                 </Typography>
                                 {personaSeleccionada && (
                                     <Button
-                                        style={ {
-                                            backgroundColor : "hsla(8, 86%, 46%, 0.51)"
+                                        style={{
+                                            backgroundColor:
+                                                "hsla(8, 86%, 46%, 0.51)",
                                         }}
                                         variant="outlined"
                                         sx={{ mt: 1 }}
