@@ -27,7 +27,18 @@ const NavBar = () => {
         <AppBar position="static">
             <Toolbar>
                 {/* Título o logo */}
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >
+                <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
+                    <img
+                        src="/icons/picos22.svg"
+                        alt="Dado"
+                        style={{
+                            width: 45,
+                            height: 45,
+                            marginRight: 20,
+                            verticalAlign: "middle",
+                            alignItems: " center",
+                        }}
+                    />
                     Consumos El Torreon III
                 </Typography>
 

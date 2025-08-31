@@ -13,7 +13,7 @@ const TotalAPagar = ({ granTotal }) => {
             <Divider sx={{ my: 1 }} />
             <Typography
                 variant="h6"
-                sx={{ fontFamily: '"cormorant garamond", serif' }}
+                sx={{ fontFamily: '"cinzel", serif' }}
                 fontSize={27}
 
             >

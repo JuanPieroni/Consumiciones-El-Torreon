@@ -102,12 +102,13 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: 2
+                    gap: 1,
+                    flexWrap: 'wrap'
                 }}
             >
-                <RestaurantMenuIcon sx={{ fontSize: '2rem' }} />
-                 CARTA 
-                <LocalDiningIcon sx={{ fontSize: '2rem' }} />
+                <RestaurantMenuIcon sx={{ fontSize: { xs: '1.8rem', sm: '2.5rem' }, color: 'secondary.main' }} />
+              CARTA 
+                <LocalDiningIcon sx={{ fontSize: { xs: '1.8rem', sm: '2.5rem' }, color: 'secondary.main' }} />
             </Typography>
             {Object.entries(productosPorCategoria).map(
                 ([categoria, subcategorias]) => (
@@ -211,7 +212,7 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
                                                     <Typography
                                                         variant="h6"
                                                         sx={{
-                                                            color: "#43a047",
+                                                            color: "primary.main",
                                                             fontWeight: "bold",
                                                             fontSize: "1rem",
                                                         }}

@@ -22,10 +22,21 @@ const theme = createTheme({
     },
     palette: {
         primary: {
-            main: "#8bc34a",
+            main: "#1976d2", // Celeste principal
         },
         secondary: {
-            main: "#00bcd4",
+            main: "#90a4ae", // Gris azulado suave
+        },
+        background: {
+            default: "#f5f7fa", // Gris muy claro con tinte azul
+            paper: "#ffffff",
+        },
+        text: {
+            primary: "#37474f", // Gris oscuro azulado
+            secondary: "#546e7a", // Gris medio azulado
+        },
+        warning: {
+            main: "#b0bec5", // Gris claro azulado
         },
     },
 })

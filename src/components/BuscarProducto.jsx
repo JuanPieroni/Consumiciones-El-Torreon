@@ -32,12 +32,17 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
     const productosFiltrados = productos.filter(
         (prod) =>
             prod.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
-            prod.categoria.toLowerCase().includes(filtro.toLowerCase())
+            (prod.categoria || "")
+                .toLowerCase()
+                .includes(filtro.toLowerCase()) ||
+            (prod.subcategoria || "")
+                .toLowerCase()
+                .includes(filtro.toLowerCase())
     )
 
     return (
         <Paper sx={{ p: 3, m: 2 }}>
-          {/*   <Typography variant="h5" align="center" gutterBottom>
+            {/*   <Typography variant="h5" align="center" gutterBottom>
                 Buscar productos
             </Typography>
  */}
@@ -45,7 +50,6 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                 label="Buscar producto o categoria"
                 variant="outlined"
                 fullWidth
-          
                 value={filtro}
                 onChange={(e) => setFiltro(e.target.value)}
             />

@@ -16,9 +16,9 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import DeleteIcon from "@mui/icons-material/Delete"
 import PaidIcon from "@mui/icons-material/Paid"
-import ReceiptIcon from "@mui/icons-material/Receipt"
-import SummarizeIcon from "@mui/icons-material/Summarize"
+
 import TotalAPagar from "./TotalAPagar"
+import { CenterFocusStrong } from "@mui/icons-material"
 
 const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
     const granTotal = Object.values(consumos).reduce(
@@ -28,26 +28,44 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
     )
 
     return (
-        <div  >
-            <Typography 
-                variant="h5" 
-                gutterBottom 
-                align="center" 
-                sx={{ 
-                    mt: 5,
-                    mb: 3,
-                    fontWeight: 'bold',
-                    color: 'primary.main',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 2
-                }}
-            >
-                <ReceiptIcon sx={{ fontSize: '2rem' }} />
-                ❖ Resumen de Consumos ❖
-                <SummarizeIcon sx={{ fontSize: '2rem' }} />
-            </Typography>
+        <div>
+                  <Typography
+                       variant="h5"
+                       align="center"
+                       gutterBottom
+                       sx={{
+                           fontWeight: "bold",
+                           color: "primary.main",
+                           display: "flex",
+                           alignItems: "center",
+                           justifyContent: "center",
+                           gap: 1,
+                           mb: 3,
+                           flexWrap: "wrap",
+                       }}
+                   >
+                       <img
+                       src="/icons/dice.svg"
+                           style={{
+                               width: 45,
+                               height: 45,
+                               marginRight: 20,
+                               verticalAlign: "middle",
+                               alignItems: " center",
+                           }}
+                       />
+                       Resumen de consumos
+                       <img
+                       src="/icons/dice.svg"
+                           style={{
+                               width: 45,
+                               height: 45,
+                               marginRight: 20,
+                               verticalAlign: "middle",
+                               alignItems: " center",
+                           }}
+                       />
+                   </Typography>
             {Object.keys(consumos).length === 0 ? (
                 <Typography
                     color="text.secondary"
@@ -85,6 +103,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                             marginRight: "10px",
                                             marginLeft: "10px",
                                             padding: "5px",
+                                            border: "1px solid black",
                                             borderRadius: "5px",
                                             backgroundColor:
                                                 " rgb(237, 236, 217)", // color de fondo claro
@@ -200,34 +219,22 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                                     <Button
                                                         endIcon={<PaidIcon />}
                                                         variant="contained"
+                                                        color="secondary"
                                                         onClick={() =>
                                                             eliminarPersona(
                                                                 persona
                                                             )
                                                         }
                                                         sx={{
-                                                            mt: 2,
-                                                            px: 2,
-                                                            py: 0.4,
+                                                            mt: 1,
+                                                            px: 1.5,
+                                                            py: 0.8,
                                                             fontWeight: "bold",
-                                                            background:
-                                                                "linear-gradient(45deg, #43cea2 30%, #185a9d 90%)",
-                                                            color: "#fff",
-                                                            borderRadius: 2,
-                                                            boxShadow:
-                                                                "0px 4px 20px rgba(0, 0, 0, 0.2)",
+                                                            borderRadius: 3,
                                                             textTransform:
                                                                 "none",
-                                                            transition:
-                                                                "all 0.3s ease",
-                                                            "&:hover": {
-                                                                background:
-                                                                    "linear-gradient(45deg, #2bc0e4 30%, #eaecc6 90%)",
-                                                                transform:
-                                                                    "scale(1.05)",
-                                                                boxShadow:
-                                                                    "0px 6px 25px rgba(0, 0, 0, 0.3)",
-                                                            },
+                                                            fontSize: "0.8rem",
+                                                            boxShadow: 2,
                                                         }}
                                                     >
                                                         Pagó
@@ -237,11 +244,12 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                                                     <Typography
                                                         variant="body2"
                                                         sx={{
+                                                            fontSize: "1.2rem",
                                                             fontWeight: "bold",
                                                             color: "text.secondary",
                                                         }}
                                                     >
-                                                        Total: ${total}
+                                                        Total: $ {total}
                                                     </Typography>
                                                 </Grid>
                                             </Grid>
@@ -254,7 +262,7 @@ const ResumenConsumo = ({ consumos, eliminarProducto, eliminarPersona }) => {
                 </div>
             )}
             <Divider sx={{ my: 2 }} />
-        <TotalAPagar  granTotal={granTotal} />
+            <TotalAPagar granTotal={granTotal} />
         </div>
     )
 }
