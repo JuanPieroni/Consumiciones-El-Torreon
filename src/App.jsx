@@ -14,7 +14,12 @@ import ResumenConsumoMemo from "./components/ResumenConsumoMemo"
 import ListaProductosVanilla from "./components/ListaProductosVanilla"
 
 // Solo lazy para rutas
-import { AdminVanilla, HistorialPagosVanilla, preloadAdmin, preloadHistorial } from "./components/LazyComponents"
+import {
+    AdminVanilla,
+    HistorialPagosVanilla,
+    preloadAdmin,
+    preloadHistorial,
+} from "./components/LazyComponents"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -141,24 +146,23 @@ const App = () => {
                                 setPersonaSeleccionada={setPersonaSeleccionada}
                                 eliminarPersona={eliminarPersona}
                             />
-                            
+
                             <BuscarProducto
                                 personaSeleccionada={personaSeleccionada}
                                 agregarProducto={agregarProducto}
                             />
-                            
+
+                            <ListaProductosVanilla
+                                productos={productos}
+                                personaSeleccionada={personaSeleccionada}
+                                agregarProducto={agregarProducto}
+                            />
                             <ResumenConsumoMemo
                                 consumos={consumos}
                                 eliminarProducto={eliminarProducto}
                                 eliminarPersona={eliminarPersona}
                                 personaSeleccionada={personaSeleccionada}
                                 pagos={pagos}
-                            />
-                            
-                            <ListaProductosVanilla
-                                productos={productos}
-                                personaSeleccionada={personaSeleccionada}
-                                agregarProducto={agregarProducto}
                             />
                         </>
                     }
