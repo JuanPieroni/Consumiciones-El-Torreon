@@ -1,6 +1,13 @@
-// Service Worker registration - TEMPORALMENTE DESHABILITADO
+// Service Worker registration - ELIMINADO COMPLETAMENTE
 export const registerSW = () => {
-  // Deshabilitado para diagnosticar problema de carga infinita
-  console.log('Service Worker deshabilitado temporalmente')
+  // Desregistrar cualquier SW existente
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      registrations.forEach(registration => {
+        registration.unregister()
+        console.log('Service Worker desregistrado')
+      })
+    })
+  }
   return
 }
