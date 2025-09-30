@@ -1,5 +1,6 @@
 import React from "react"
 import TotalAPagarVanilla from "./TotalAPagarVanilla"
+import { capitalize } from "../utils/textUtils"
 
 const ResumenConsumoVanilla = ({ consumos, eliminarProducto, eliminarPersona }) => {
     const granTotal = Object.values(consumos).reduce(
@@ -57,7 +58,7 @@ const ResumenConsumoVanilla = ({ consumos, eliminarProducto, eliminarPersona }) 
                                                         padding: '8px 0',
                                                         borderBottom: idx < productos.length - 1 ? '1px dotted #ccc' : 'none'
                                                     }}>
-                                                        <span>{nombre}</span>
+                                                        <span>{capitalize(nombre)}</span>
                                                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                                             <span style={{ color: '#5e72e4', fontWeight: 'bold' }}>
                                                                 ${precio}

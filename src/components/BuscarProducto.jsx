@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { supabase } from "../supabaseClient"
+import { capitalize } from "../utils/textUtils"
 
 const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
     const [productos, setProductos] = useState([])
@@ -33,13 +34,22 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
     )
 
     return (
-        <div className="paper">
-            <input
-                className="input"
-                placeholder="Buscar producto o categoria"
-                value={filtro}
-                onChange={(e) => setFiltro(e.target.value)}
-            />
+        <>
+            <h2 style={{
+                textAlign: 'center',
+                marginBottom: '24px',
+                color: '#424242',
+                fontWeight: 'bold'
+            }}>
+                ♦ Buscar Productos ♦
+            </h2>
+            <div className="paper">
+                <input
+                    className="input"
+                    placeholder="Buscar producto o categoria"
+                    value={filtro}
+                    onChange={(e) => setFiltro(e.target.value)}
+                />
 
             {filtro.trim() && productosFiltrados.length > 0 ? (
                 <div className="mt-4 flex flex-col gap-2">
@@ -53,7 +63,7 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                             }}
                         >
                             <h3 style={{ fontWeight: "bold", marginBottom: "8px" }}>
-                                {prod.nombre}
+                                {capitalize(prod.nombre)}
                             </h3>
                             <p style={{
                                 color: "#5e72e4",
@@ -69,7 +79,7 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                                 fontSize: "0.8rem",
                                 margin: "4px 0"
                             }}>
-                                {prod.categoria}
+                                {capitalize(prod.categoria)}
                             </p>
                             {prod.subcategoria && (
                                 <p style={{
@@ -77,7 +87,7 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                                     fontSize: "0.8rem",
                                     margin: "4px 0"
                                 }}>
-                                    {prod.subcategoria}
+                                    {capitalize(prod.subcategoria)}
                                 </p>
                             )}
 
@@ -102,7 +112,8 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                     No se encontraron productos que coincidan.
                 </p>
             ) : null}
-        </div>
+            </div>
+        </>
     )
 }
 

@@ -20,7 +20,7 @@ import {
     preloadResumenConsumo,
     preloadListaProductos,
     preloadAdmin,
-    preloadHistorial
+    preloadHistorial,
 } from "./components/LazyComponentsAdvanced"
 
 const App = () => {
@@ -37,7 +37,7 @@ const App = () => {
     const [pagos, setPagos] = useState(() => {
         return JSON.parse(localStorage.getItem("pagos")) || []
     })
-    
+
     const [personaSeleccionada, setPersonaSeleccionada] = useState()
     const { productos } = useProductos()
 
@@ -51,17 +51,20 @@ const App = () => {
         localStorage.setItem("consumos", JSON.stringify(consumos))
     }, [consumos])
 
-    const agregarPersona = useCallback((nombre) => {
-        if (!personas.includes(nombre)) {
-            setPersonas([...personas, nombre])
-        }
-        setPersonaSeleccionada(nombre)
-    }, [personas])
+    const agregarPersona = useCallback(
+        (nombre) => {
+            if (!personas.includes(nombre)) {
+                setPersonas([...personas, nombre])
+            }
+            setPersonaSeleccionada(nombre)
+        },
+        [personas]
+    )
 
     const eliminarPersona = (nombre) => {
         const total =
             consumos[nombre]?.reduce((acc, prod) => acc + prod.precio, 0) || 0
-        showToast(`${nombre} ya abonó la suma de $${total}`, 'success')
+        showToast(`${nombre} ya abonó la suma de $${total}`, "success")
 
         setPagos((prev) => [
             ...prev,
@@ -78,21 +81,24 @@ const App = () => {
         }
     }
 
-    const agregarProducto = useCallback((producto) => {
-        if (!personaSeleccionada) return
-        setConsumos((prev) => {
-            const prevPersona = prev[personaSeleccionada] || []
-            return {
-                ...prev,
-                [personaSeleccionada]: [...prevPersona, producto],
-            }
-        })
+    const agregarProducto = useCallback(
+        (producto) => {
+            if (!personaSeleccionada) return
+            setConsumos((prev) => {
+                const prevPersona = prev[personaSeleccionada] || []
+                return {
+                    ...prev,
+                    [personaSeleccionada]: [...prevPersona, producto],
+                }
+            })
 
-        // El contexto maneja la persistencia de productos
+            // El contexto maneja la persistencia de productos
 
-        // Sonido de confirmación
-        playSuccessSound()
-    }, [personaSeleccionada, productos])
+            // Sonido de confirmación
+            playSuccessSound()
+        },
+        [personaSeleccionada, productos]
+    )
 
     const eliminarProducto = (persona, index) => {
         setConsumos((prev) => {
@@ -126,7 +132,7 @@ const App = () => {
     return (
         <>
             <Toast />
-            <NavBar 
+            <NavBar
                 onHistorialHover={preloadHistorial}
                 onAdminHover={preloadAdmin}
             />
@@ -135,38 +141,65 @@ const App = () => {
                     path="/"
                     element={
                         <>
-                            <Suspense fallback={<div className="loading">Cargando selector...</div>}>
+                            <Suspense
+                                fallback={
+                                    <div className="loading">
+                                        Cargando selector...
+                                    </div>
+                                }
+                            >
                                 <SelectorPersona
                                     personas={personas}
                                     agregarPersona={agregarPersona}
                                     personaSeleccionada={personaSeleccionada}
-                                    setPersonaSeleccionada={setPersonaSeleccionada}
+                                    setPersonaSeleccionada={
+                                        setPersonaSeleccionada
+                                    }
                                     eliminarPersona={eliminarPersona}
                                 />
                             </Suspense>
-                            
-                            <Suspense fallback={<div className="loading">Cargando búsqueda...</div>}>
+
+                            <Suspense
+                                fallback={
+                                    <div className="loading">
+                                        Cargando búsqueda...
+                                    </div>
+                                }
+                            >
                                 <BuscarProducto
                                     personaSeleccionada={personaSeleccionada}
                                     agregarProducto={agregarProducto}
                                 />
                             </Suspense>
-                            
-                            <Suspense fallback={<div className="loading">Cargando resumen...</div>}>
+
+
+                            <Suspense
+                                fallback={
+                                    <div className="loading">
+                                        Cargando productos...
+                                    </div>
+                                }
+                            >
+                                <ListaProductosVanilla
+                                    productos={productos}
+                                    personaSeleccionada={personaSeleccionada}
+                                    agregarProducto={agregarProducto}
+                                />
+                            </Suspense>
+                            <Suspense
+                                fallback={
+                                    <div className="loading">
+                                        Cargando resumen...
+                                    </div>
+                                }
+                            >
                                 <ResumenConsumoMemo
                                     consumos={consumos}
                                     eliminarProducto={eliminarProducto}
                                     eliminarPersona={eliminarPersona}
                                     personaSeleccionada={personaSeleccionada}
                                     pagos={pagos}
-                                />
-                            </Suspense>
-                            
-                            <Suspense fallback={<div className="loading">Cargando productos...</div>}>
-                                <ListaProductosVanilla
-                                    productos={productos}
-                                    personaSeleccionada={personaSeleccionada}
-                                    agregarProducto={agregarProducto}
+                                    
                                 />
                             </Suspense>
                         </>
@@ -176,7 +209,13 @@ const App = () => {
                 <Route
                     path="/historial"
                     element={
-                        <Suspense fallback={<div className="loading">Cargando historial...</div>}>
+                        <Suspense
+                            fallback={
+                                <div className="loading">
+                                    Cargando historial...
+                                </div>
+                            }
+                        >
                             <HistorialPagosVanilla
                                 pagos={pagos}
                                 productos={productos}
@@ -185,13 +224,17 @@ const App = () => {
                         </Suspense>
                     }
                 />
-                <Route 
-                    path="/admin" 
+                <Route
+                    path="/admin"
                     element={
-                        <Suspense fallback={<div className="loading">Cargando admin...</div>}>
+                        <Suspense
+                            fallback={
+                                <div className="loading">Cargando admin...</div>
+                            }
+                        >
                             <AdminVanilla />
                         </Suspense>
-                    } 
+                    }
                 />
             </Routes>
         </>
