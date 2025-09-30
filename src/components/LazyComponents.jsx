@@ -1,14 +1,9 @@
 import { lazy } from 'react'
 
-// Lazy loading optimizado con preload
-export const HistorialPagos = lazy(() => 
-  import('./HistorialPagosVanilla').then(module => ({ default: module.default }))
-)
+// Solo lazy para rutas
+export const HistorialPagosVanilla = lazy(() => import('./HistorialPagosVanilla'))
+export const AdminVanilla = lazy(() => import('./AdminVanilla'))
 
-export const Admin = lazy(() => 
-  import('./AdminVanilla').then(module => ({ default: module.default }))
-)
-
-// Preload components on hover
+// Preload functions
 export const preloadHistorial = () => import('./HistorialPagosVanilla')
 export const preloadAdmin = () => import('./AdminVanilla')

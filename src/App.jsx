@@ -7,21 +7,14 @@ import { useProductos } from "./context/ProductosContext"
 import Toast, { showToast } from "./components/Toast"
 import "./styles/global.css"
 
-// Lazy loading granular
-import {
-    BuscarProducto,
-    SelectorPersona,
-    ResumenConsumoMemo,
-    ListaProductosVanilla,
-    AdminVanilla,
-    HistorialPagosVanilla,
-    preloadBuscarProducto,
-    preloadSelectorPersona,
-    preloadResumenConsumo,
-    preloadListaProductos,
-    preloadAdmin,
-    preloadHistorial,
-} from "./components/LazyComponentsAdvanced"
+// Componentes principales (no lazy)
+import SelectorPersona from "./components/SelectorPersona"
+import BuscarProducto from "./components/BuscarProducto"
+import ResumenConsumoMemo from "./components/ResumenConsumoMemo"
+import ListaProductosVanilla from "./components/ListaProductosVanilla"
+
+// Solo lazy para rutas
+import { AdminVanilla, HistorialPagosVanilla, preloadAdmin, preloadHistorial } from "./components/LazyComponents"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -141,67 +134,32 @@ const App = () => {
                     path="/"
                     element={
                         <>
-                            <Suspense
-                                fallback={
-                                    <div className="loading">
-                                        Cargando selector...
-                                    </div>
-                                }
-                            >
-                                <SelectorPersona
-                                    personas={personas}
-                                    agregarPersona={agregarPersona}
-                                    personaSeleccionada={personaSeleccionada}
-                                    setPersonaSeleccionada={
-                                        setPersonaSeleccionada
-                                    }
-                                    eliminarPersona={eliminarPersona}
-                                />
-                            </Suspense>
-
-                            <Suspense
-                                fallback={
-                                    <div className="loading">
-                                        Cargando búsqueda...
-                                    </div>
-                                }
-                            >
-                                <BuscarProducto
-                                    personaSeleccionada={personaSeleccionada}
-                                    agregarProducto={agregarProducto}
-                                />
-                            </Suspense>
-
-
-                            <Suspense
-                                fallback={
-                                    <div className="loading">
-                                        Cargando productos...
-                                    </div>
-                                }
-                            >
-                                <ListaProductosVanilla
-                                    productos={productos}
-                                    personaSeleccionada={personaSeleccionada}
-                                    agregarProducto={agregarProducto}
-                                />
-                            </Suspense>
-                            <Suspense
-                                fallback={
-                                    <div className="loading">
-                                        Cargando resumen...
-                                    </div>
-                                }
-                            >
-                                <ResumenConsumoMemo
-                                    consumos={consumos}
-                                    eliminarProducto={eliminarProducto}
-                                    eliminarPersona={eliminarPersona}
-                                    personaSeleccionada={personaSeleccionada}
-                                    pagos={pagos}
-                                    
-                                />
-                            </Suspense>
+                            <SelectorPersona
+                                personas={personas}
+                                agregarPersona={agregarPersona}
+                                personaSeleccionada={personaSeleccionada}
+                                setPersonaSeleccionada={setPersonaSeleccionada}
+                                eliminarPersona={eliminarPersona}
+                            />
+                            
+                            <BuscarProducto
+                                personaSeleccionada={personaSeleccionada}
+                                agregarProducto={agregarProducto}
+                            />
+                            
+                            <ResumenConsumoMemo
+                                consumos={consumos}
+                                eliminarProducto={eliminarProducto}
+                                eliminarPersona={eliminarPersona}
+                                personaSeleccionada={personaSeleccionada}
+                                pagos={pagos}
+                            />
+                            
+                            <ListaProductosVanilla
+                                productos={productos}
+                                personaSeleccionada={personaSeleccionada}
+                                agregarProducto={agregarProducto}
+                            />
                         </>
                     }
                 />
