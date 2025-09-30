@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { supabase } from "../supabaseClient"
+import React, { useMemo } from "react"
+import { useProductos } from "../context/ProductosContext"
 import {
     Accordion,
     AccordionSummary,
@@ -15,22 +15,9 @@ import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu"
 import LocalDiningIcon from "@mui/icons-material/LocalDining"
 import Swal from "sweetalert2"
 
-const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
-    const [productos, setProductos] = useState([])
-    const [expanded, setExpanded] = useState(false) // cuál está expandido
-
-    useEffect(() => {
-        const cargarProductos = async () => {
-            const { data, error } = await supabase.from("productos").select("*")
-            if (error) {
-                console.error("Error al cargar productos:", error.message)
-                return
-            }
-            setProductos(data)
-        }
-
-        cargarProductos()
-    }, [])
+const ListaProductos = React.memo(({ personaSeleccionada, agregarProducto }) => {
+    const { productos } = useProductos()
+    const [expanded, setExpanded] = React.useState(false)
 
     const handleAgregar = (producto) => {
         if (!personaSeleccionada) {
@@ -49,26 +36,26 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
         agregarProducto(producto)
     }
 
-    // Agrupar productos por categoría y subcategoría
-    const productosPorCategoria = productos.reduce((acc, producto) => {
-        const categoria = producto.categoria || "Otros"
+    // Agrupar productos por categoría y subcategoría (memoizado)
+    const productosPorCategoria = useMemo(() => {
+        return productos.reduce((acc, producto) => {
+            const categoria = producto.categoria || "Otros"
 
-        if (!acc[categoria])
-            acc[categoria] = { productos: [], subcategorias: {} }
+            if (!acc[categoria])
+                acc[categoria] = { productos: [], subcategorias: {} }
 
-        if (producto.subcategoria) {
-            // Tiene subcategoría - va en subcategorías
-            if (!acc[categoria].subcategorias[producto.subcategoria]) {
-                acc[categoria].subcategorias[producto.subcategoria] = []
+            if (producto.subcategoria) {
+                if (!acc[categoria].subcategorias[producto.subcategoria]) {
+                    acc[categoria].subcategorias[producto.subcategoria] = []
+                }
+                acc[categoria].subcategorias[producto.subcategoria].push(producto)
+            } else {
+                acc[categoria].productos.push(producto)
             }
-            acc[categoria].subcategorias[producto.subcategoria].push(producto)
-        } else {
-            // No tiene subcategoría - va directo en la categoría principal
-            acc[categoria].productos.push(producto)
-        }
 
-        return acc
-    }, {})
+            return acc
+        }, {})
+    }, [productos])
 
     const handleChange = (categoria) => (event, isExpanded) => {
         setExpanded(isExpanded ? categoria : false)
@@ -380,6 +367,6 @@ const ListaProductos = ({ personaSeleccionada, agregarProducto }) => {
             )}
         </div>
     )
-}
+})
 
 export default ListaProductos

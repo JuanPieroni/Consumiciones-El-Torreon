@@ -1,16 +1,5 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import {
-    Box,
-    Typography,
-    TextField,
-    Button,
-    Card,
-    Grid,
-    Stack,
-} from "@mui/material"
-
-import Swal from "sweetalert2"
+import { showToast } from "./Toast"
 
 const SelectorPersona = ({
     personas,
@@ -20,7 +9,6 @@ const SelectorPersona = ({
     eliminarPersona,
 }) => {
     const [nombreInput, setNombreInput] = useState("")
-    const navigate = useNavigate()
 
     const handleAgregar = () => {
         // uppercase all letters
@@ -32,53 +20,27 @@ const SelectorPersona = ({
         } else if (nombre && personas.includes(nombre)) {
             setPersonaSeleccionada(nombre)
         } else {
-            Swal.fire({
-                text: "Ingresa un nombre válido",
-                icon: "error",
-                confirmButtonText: "Cool",
-            })
+            showToast("Ingresa un nombre válido", "error")
         }
     }
 
     return (
-        <Box
-            p={2}
-            m={2}
-            sx={{
-                bgcolor: "#bcbcbccd",
-                borderRadius: 3,
-                boxShadow: 3,
-                border: "2px solid #a6a6a6ff",
-            }}
-        >
-            <Typography
-                variant="h5"
-                align="center"
-                gutterBottom
-                sx={{
-                    fontWeight: "bold",
-                    color: "primary.main",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: { xs: 0.5, sm: 1 },
-                    mb: 3,
-                    flexWrap: "nowrap",
-                }}
-            >
+        <div className="paper">
+            <h2 className="flex items-center justify-center gap-4 mb-4" style={{
+                fontWeight: "bold",
+                color: "#424242",
+                textAlign: "center"
+            }}>
                 <img
                     src="/icons/dice.svg"
                     style={{
                         width: window.innerWidth < 600 ? 35 : 45,
                         height: window.innerWidth < 600 ? 35 : 45,
-                        marginRight: window.innerWidth < 600 ? 13 : 20,
                     }}
                 />
-                <span
-                    style={{
-                        fontSize: window.innerWidth < 600 ? "1.2rem" : "1.5rem",
-                    }}
-                >
+                <span style={{
+                    fontSize: window.innerWidth < 600 ? "1.2rem" : "1.5rem",
+                }}>
                     Agregar Persona
                 </span>
                 <img
@@ -86,92 +48,72 @@ const SelectorPersona = ({
                     style={{
                         width: window.innerWidth < 600 ? 35 : 45,
                         height: window.innerWidth < 600 ? 35 : 45,
-                        marginLeft: window.innerWidth < 600 ? 13 : 20,
                     }}
                 />
-            </Typography>
+            </h2>
 
-            <Stack spacing={2} direction={{ xs: "column", sm: "row" }} mb={3}>
-                <TextField
-                    label="Nombre"
-                    variant="outlined"
+            <div className="flex gap-2 mb-4" style={{ flexDirection: window.innerWidth < 600 ? "column" : "row" }}>
+                <input
+                    className="input"
+                    placeholder="Nombre"
                     value={nombreInput}
                     onChange={(e) => setNombreInput(e.target.value)}
-                    fullWidth
                 />
-                <Button
-                    variant="contained"
-                    color="primary"
+                <button
+                    className="btn btn-primary"
                     onClick={handleAgregar}
                 >
                     Agregar
-                </Button>
-            </Stack>
-            <Typography
-                variant="subtitle1"
-                gutterBottom
-                align="center"
-                marginBottom={2}
-            >
+                </button>
+            </div>
+            <p style={{ textAlign: "center", marginBottom: "16px" }}>
                 {personaSeleccionada ? (
                     <>
                         Agregando consumos a{" "}
                         <span style={{ fontWeight: "bolder" }}>:</span>{" "}
-                        <span
-                            style={{
-                                padding: "5px",
-                                color: "#060606ff",
-                                fontWeight: "bolder",
-                            }}
-                        >
+                        <span style={{
+                            padding: "5px",
+                            color: "#060606ff",
+                            fontWeight: "bolder",
+                        }}>
                             {personaSeleccionada}
                         </span>
                     </>
                 ) : (
                     "Selecciona una persona"
                 )}
-            </Typography>
+            </p>
 
-            <Grid container spacing={2} justifyContent="center">
+            <div className="grid grid-cols-4 gap-2" style={{ justifyContent: "center" }}>
                 {personas.map((persona) => {
                     const isSelected = persona === personaSeleccionada
                     return (
-                        <Grid item xs={6} sm={4} md={3} key={persona}>
-                            <Card
-                                onClick={() => setPersonaSeleccionada(persona)}
-                                sx={{
-                                    borderRadius: 2,
-
-                                    bgcolor: isSelected
-                                        ? {
-                                              padding: "5px",
-                                              backgroundColor:
-                                                  "hsla(8, 86%, 46%, 0.51)",
-                                              border: "1px solid black",
-                                              
-                                              
-                                          }
-                                        : "background.paper",
-
-                                    transition: "all 0.3s",
-                                    height: "30px", // 🔽 MÁS CHICO
-                                    minWidth: "10px", // 🔽 ANCHO MÍNIMO
-                                    px: 1, // 🔽 padding horizontal
-                                    py: 0.4, // 🔽 padding vertical
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <Typography variant="body2" noWrap>
-                                    {persona}
-                                </Typography>
-                            </Card>
-                        </Grid>
+                        <div
+                            key={persona}
+                            className="card"
+                            onClick={() => setPersonaSeleccionada(persona)}
+                            style={{
+                                backgroundColor: isSelected 
+                                    ? "hsla(8, 86%, 46%, 0.51)" 
+                                    : "white",
+                                border: isSelected ? "1px solid black" : "1px solid #ddd",
+                                transition: "all 0.3s",
+                                height: "40px",
+                                minWidth: "60px",
+                                padding: "4px 8px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                cursor: "pointer",
+                                fontSize: "0.9rem"
+                            }}
+                        >
+                            {persona}
+                        </div>
                     )
                 })}
-            </Grid>
-        </Box>
+            </div>
+        </div>
     )
 }
 

@@ -1,0 +1,145 @@
+.lista-productos {
+  padding: 8px;
+  margin: 16px;
+}
+
+.carta-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #424242;
+  margin: 32px 0 24px 0;
+}
+
+.categoria-accordion {
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.categoria-header {
+  width: 100%;
+  padding: 16px;
+  background: #f5f5f5;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.categoria-header:hover {
+  background: #e0e0e0;
+}
+
+.categoria-header.expanded {
+  background: #424242;
+  color: white;
+}
+
+.expand-icon {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.categoria-content {
+  padding: 16px;
+  background: white;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.producto-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.producto-card:hover {
+  transform: scale(1.02);
+  background: #f0f0f0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.producto-card:active {
+  background: #e0f7fa;
+}
+
+.producto-nombre {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.producto-precio {
+  color: #5e72e4;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.subcategoria {
+  margin-bottom: 16px;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+}
+
+.subcategoria-header {
+  padding: 12px;
+  background: #f9f9f9;
+  cursor: pointer;
+  font-weight: bold;
+  color: #5e72e4;
+  border-radius: 6px;
+}
+
+.subcategoria-header:hover {
+  background: #f0f0f0;
+}
+
+.subcategoria[open] .subcategoria-header {
+  border-bottom: 1px solid #f0f0f0;
+  border-radius: 6px 6px 0 0;
+}
+
+.subcategoria .productos-grid {
+  padding: 12px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .productos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+  }
+  
+  .producto-card {
+    padding: 8px;
+    min-height: 70px;
+  }
+  
+  .producto-nombre {
+    font-size: 12px;
+  }
+  
+  .producto-precio {
+    font-size: 14px;
+  }
+}

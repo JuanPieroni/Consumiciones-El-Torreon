@@ -1,21 +1,27 @@
 // App.jsx
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
-import { useEffect, useState, lazy, Suspense, useCallback, useMemo } from "react"
+import { Routes, Route } from "react-router-dom"
+import { useEffect, useState, Suspense, useCallback } from "react"
 import { playSuccessSound } from "./utils/soundUtils"
-import SelectorPersona from "./components/SelectorPersona"
-import ListaProductos from "./components/ListaProductos"
-import ResumenConsumo from "./components/ResumenConsumo"
-import { supabase } from "./supabaseClient"
-import NavBar from "./components/NavBar"
-import Swal from "sweetalert2"
-import { ThemeProvider, CssBaseline } from "@mui/material"
-import theme from "./theme"
-import BuscarProducto from "./components/BuscarProducto.jsx"
- 
+import NavBar from "./components/NavBarVanilla"
+import { useProductos } from "./context/ProductosContext"
+import Toast, { showToast } from "./components/Toast"
+import "./styles/global.css"
 
-// Lazy loading para rutas menos usadas
-const HistorialPagos = lazy(() => import("./components/HistorialPagos"))
-const Admin = lazy(() => import("./components/Admin"))
+// Lazy loading granular
+import {
+    BuscarProducto,
+    SelectorPersona,
+    ResumenConsumoMemo,
+    ListaProductosVanilla,
+    AdminVanilla,
+    HistorialPagosVanilla,
+    preloadBuscarProducto,
+    preloadSelectorPersona,
+    preloadResumenConsumo,
+    preloadListaProductos,
+    preloadAdmin,
+    preloadHistorial
+} from "./components/LazyComponentsAdvanced"
 
 const App = () => {
     const [personas, setPersonas] = useState(() => {
@@ -31,6 +37,10 @@ const App = () => {
     const [pagos, setPagos] = useState(() => {
         return JSON.parse(localStorage.getItem("pagos")) || []
     })
+    
+    const [personaSeleccionada, setPersonaSeleccionada] = useState()
+    const { productos } = useProductos()
+
     // Guardar personas en localStorage cada vez que cambian
     useEffect(() => {
         localStorage.setItem("personas", JSON.stringify(personas))
@@ -40,23 +50,6 @@ const App = () => {
     useEffect(() => {
         localStorage.setItem("consumos", JSON.stringify(consumos))
     }, [consumos])
-    const [productos, setProductos] = useState([])
-
-    const [personaSeleccionada, setPersonaSeleccionada] = useState()
-
-    useEffect(() => {
-        const fetchProductos = async () => {
-            const { data, error } = await supabase.from("productos").select("*")
-
-            if (error) {
-                console.error("Error al obtener productos:", error.message)
-            } else {
-                setProductos(data)
-            }
-        }
-
-        fetchProductos()
-    }, []) // solo se ejecuta una vez al inicio
 
     const agregarPersona = useCallback((nombre) => {
         if (!personas.includes(nombre)) {
@@ -68,21 +61,7 @@ const App = () => {
     const eliminarPersona = (nombre) => {
         const total =
             consumos[nombre]?.reduce((acc, prod) => acc + prod.precio, 0) || 0
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top",
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer
-                toast.onmouseleave = Swal.resumeTimer
-            },
-        })
-        Toast.fire({
-            icon: "success",
-            title: `${nombre} ya abonó la suma de $${total}`,
-        })
+        showToast(`${nombre} ya abonó la suma de $${total}`, 'success')
 
         setPagos((prev) => [
             ...prev,
@@ -109,15 +88,7 @@ const App = () => {
             }
         })
 
-        const yaExiste = productos.some((p) => p.nombre === producto.nombre)
-        if (!yaExiste) {
-            const nuevoId =
-                productos.length > 0
-                    ? Math.max(...productos.map((p) => p.id)) + 1
-                    : 1
-            const nuevoProducto = { ...producto, id: nuevoId }
-            setProductos((prev) => [...prev, nuevoProducto])
-        }
+        // El contexto maneja la persistencia de productos
 
         // Sonido de confirmación
         playSuccessSound()
@@ -153,47 +124,51 @@ const App = () => {
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <NavBar />
+        <>
+            <Toast />
+            <NavBar 
+                onHistorialHover={preloadHistorial}
+                onAdminHover={preloadAdmin}
+            />
             <Routes>
                 <Route
                     path="/"
                     element={
                         <>
-                            <section>
+                            <Suspense fallback={<div className="loading">Cargando selector...</div>}>
                                 <SelectorPersona
                                     personas={personas}
                                     agregarPersona={agregarPersona}
                                     personaSeleccionada={personaSeleccionada}
-                                    setPersonaSeleccionada={
-                                        setPersonaSeleccionada
-                                    }
+                                    setPersonaSeleccionada={setPersonaSeleccionada}
                                     eliminarPersona={eliminarPersona}
                                 />
-                            </section>
-                            <section>
+                            </Suspense>
+                            
+                            <Suspense fallback={<div className="loading">Cargando búsqueda...</div>}>
                                 <BuscarProducto
                                     personaSeleccionada={personaSeleccionada}
                                     agregarProducto={agregarProducto}
                                 />
-                            </section>
-                            <section>
-                                <ResumenConsumo
+                            </Suspense>
+                            
+                            <Suspense fallback={<div className="loading">Cargando resumen...</div>}>
+                                <ResumenConsumoMemo
                                     consumos={consumos}
                                     eliminarProducto={eliminarProducto}
                                     eliminarPersona={eliminarPersona}
                                     personaSeleccionada={personaSeleccionada}
                                     pagos={pagos}
                                 />
-                            </section>
-                            <section>
-                                <ListaProductos
+                            </Suspense>
+                            
+                            <Suspense fallback={<div className="loading">Cargando productos...</div>}>
+                                <ListaProductosVanilla
                                     productos={productos}
                                     personaSeleccionada={personaSeleccionada}
                                     agregarProducto={agregarProducto}
                                 />
-                            </section>
+                            </Suspense>
                         </>
                     }
                 />
@@ -201,27 +176,25 @@ const App = () => {
                 <Route
                     path="/historial"
                     element={
-                        <Suspense fallback={<div>Cargando...</div>}>
-                            <section>
-                                <HistorialPagos
-                                    pagos={pagos}
-                                    productos={productos}
-                                    limpiarLocalStorage={limpiarLocalStorage}
-                                />
-                            </section>
+                        <Suspense fallback={<div className="loading">Cargando historial...</div>}>
+                            <HistorialPagosVanilla
+                                pagos={pagos}
+                                productos={productos}
+                                limpiarLocalStorage={limpiarLocalStorage}
+                            />
                         </Suspense>
                     }
                 />
                 <Route 
                     path="/admin" 
                     element={
-                        <Suspense fallback={<div>Cargando...</div>}>
-                            <Admin />
+                        <Suspense fallback={<div className="loading">Cargando admin...</div>}>
+                            <AdminVanilla />
                         </Suspense>
                     } 
                 />
             </Routes>
-        </ThemeProvider>
+        </>
     )
 }
 

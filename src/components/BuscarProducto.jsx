@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { supabase } from "../supabaseClient"
-import {
-    Paper,
-    Typography,
-    TextField,
-    Stack,
-    Card,
-    CardContent,
-    Button,
-} from "@mui/material"
 
 const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
     const [productos, setProductos] = useState([])
@@ -42,101 +33,76 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
     )
 
     return (
-        <Paper
-            sx={{
-                p: 2,
-                m: 2,
-                bgcolor: "#bcbcbccd",
-                borderRadius: 3,
-                boxShadow: "0 2px 3px hsla(10, 5%, 46%, 0.51)",
-                border: "2px solid #a6a6a6ff",
-            }}
-        >
-            <TextField
-                label="Buscar producto o categoria"
-                variant="outlined"
-                fullWidth
+        <div className="paper">
+            <input
+                className="input"
+                placeholder="Buscar producto o categoria"
                 value={filtro}
                 onChange={(e) => setFiltro(e.target.value)}
             />
 
             {filtro.trim() && productosFiltrados.length > 0 ? (
-                <Stack spacing={1} sx={{ mt: 2 }}>
+                <div className="mt-4 flex flex-col gap-2">
                     {productosFiltrados.map((prod) => (
-                        <Card
+                        <div
                             key={prod.id}
-                            sx={{
-                                backgroundColor:" hsla(90, 29%, 95%, 0.87)",
-                                border: "1px solid #e0e0e0",
-                                borderRadius: 3,
-                                boxShadow: "0 2px 3px hsla(10, 5%, 46%, 0.51)",
+                            className="card"
+                            style={{
+                                backgroundColor: "hsla(90, 29%, 95%, 0.87)",
+                                border: "1px solid #e0e0e0"
                             }}
                         >
-                            <CardContent>
-                                <Typography
-                                    
-                                    variant="h7"
-                                    sx={{   fontWeight: "bold" }}>
-                                        
-                                    {prod.nombre}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    sx={{
-                                        color: "info.main",
-                                        fontWeight: "bold",
-                                        fontSize: "0.8rem",
-                                    }}
-                                >
-                                    ${prod.precio}
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{ fontWeight: "bold"}}
-                                   
-                                >
-                                    {prod.categoria}
-                                </Typography>
-                                {prod.subcategoria && (
-                                    <Typography
-                                        variant="body2"
-                                        sx={{
-                                            color: "text.secondary",
-                                            
-                                        }}
-                                    >
-                                        {prod.subcategoria}
-                                    </Typography>
-                                )}
+                            <h3 style={{ fontWeight: "bold", marginBottom: "8px" }}>
+                                {prod.nombre}
+                            </h3>
+                            <p style={{
+                                color: "#5e72e4",
+                                fontWeight: "bold",
+                                fontSize: "0.9rem",
+                                margin: "4px 0"
+                            }}>
+                                ${prod.precio}
+                            </p>
+                            <p style={{
+                                color: "#616161",
+                                fontWeight: "bold",
+                                fontSize: "0.8rem",
+                                margin: "4px 0"
+                            }}>
+                                {prod.categoria}
+                            </p>
+                            {prod.subcategoria && (
+                                <p style={{
+                                    color: "#616161",
+                                    fontSize: "0.8rem",
+                                    margin: "4px 0"
+                                }}>
+                                    {prod.subcategoria}
+                                </p>
+                            )}
 
-                                {personaSeleccionada && (
-                                    <Button
-                                        variant="text"
-                                        sx={{
-                                            mt: 1,
-                                            color: "hsla(8, 86%, 46%, 0.51)",
-                                            border:"1px solid black"
-                                        }}
-                                        onClick={() => agregarProducto(prod)}
-                                    >
-                                        Agregar a {personaSeleccionada}
-                                    </Button>
-                                )}
-                            </CardContent>
-                        </Card>
+                            {personaSeleccionada && (
+                                <button
+                                    className="btn btn-text"
+                                    style={{
+                                        marginTop: "8px",
+                                        color: "hsla(8, 86%, 46%, 0.51)",
+                                        border: "1px solid black"
+                                    }}
+                                    onClick={() => agregarProducto(prod)}
+                                >
+                                    Agregar a {personaSeleccionada}
+                                </button>
+                            )}
+                        </div>
                     ))}
-                </Stack>
+                </div>
             ) : filtro.trim() ? (
-                <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    sx={{ mt: 2 }}
-                >
+                <p style={{ marginTop: "16px", color: "#616161" }}>
                     No se encontraron productos que coincidan.
-                </Typography>
+                </p>
             ) : null}
-        </Paper>
+        </div>
     )
 }
 
