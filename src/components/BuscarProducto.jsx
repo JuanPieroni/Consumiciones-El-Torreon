@@ -74,6 +74,7 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                     placeholder="Buscar producto o categoria"
                     value={filtro}
                     onChange={(e) => setFiltro(e.target.value)}
+                    onFocus={() => setFiltro("")}
                 />
 
             {filtro.trim() && productosFiltrados.length > 0 ? (
