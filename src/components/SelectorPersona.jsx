@@ -25,7 +25,7 @@ const SelectorPersona = ({
     }
 
     return (
-        <div className="paper">
+        <div className={`paper ${!personaSeleccionada ? 'pulse-attention' : ''}`}>
             <h2 className="flex items-center justify-center gap-4 mb-4" style={{
                 fontWeight: "bold",
                 color: "#424242",
@@ -51,6 +51,12 @@ const SelectorPersona = ({
                     }}
                 />
             </h2>
+            
+            {!personaSeleccionada && (
+                <div className="warning-message">
+                    ⚠️ SELECCIONA UNA PERSONA PRIMERO
+                </div>
+            )}
 
             <div className="flex gap-2 mb-4" style={{ flexDirection: window.innerWidth < 600 ? "column" : "row" }}>
                 <input
@@ -66,23 +72,25 @@ const SelectorPersona = ({
                     Agregar
                 </button>
             </div>
-            <p style={{ textAlign: "center", marginBottom: "16px" }}>
-                {personaSeleccionada ? (
-                    <>
-                        Agregando consumos a{" "}
-                        <span style={{ fontWeight: "bolder" }}>:</span>{" "}
-                        <span style={{
-                            padding: "5px",
-                            color: "#060606ff",
-                            fontWeight: "bolder",
-                        }}>
-                            {personaSeleccionada}
-                        </span>
-                    </>
-                ) : (
-                    "Selecciona una persona"
-                )}
-            </p>
+            {personaSeleccionada && (
+                <p style={{ 
+                    textAlign: "center", 
+                    marginBottom: "16px",
+                    background: "#dcfce7",
+                    padding: "12px",
+                    borderRadius: "8px",
+                    border: "2px solid #10b981"
+                }}>
+                    ✅ Agregando consumos a:{" "}
+                    <span style={{
+                        fontWeight: "bolder",
+                        color: "#065f46",
+                        fontSize: "1.1rem"
+                    }}>
+                        {personaSeleccionada}
+                    </span>
+                </p>
+            )}
 
             <div className="grid grid-cols-4 gap-2" style={{ justifyContent: "center" }}>
                 {personas.map((persona) => {
@@ -90,13 +98,13 @@ const SelectorPersona = ({
                     return (
                         <div
                             key={persona}
-                            className="card"
+                            className={`card ${isSelected ? 'persona-selected' : ''}`}
                             onClick={() => setPersonaSeleccionada(persona)}
                             style={{
                                 backgroundColor: isSelected 
-                                    ? "hsla(8, 86%, 46%, 0.51)" 
+                                    ? "#dcfce7" 
                                     : "white",
-                                border: isSelected ? "1px solid black" : "1px solid #ddd",
+                                border: isSelected ? "2px solid #10b981" : "1px solid #ddd",
                                 transition: "all 0.3s",
                                 height: "40px",
                                 minWidth: "60px",
@@ -105,10 +113,11 @@ const SelectorPersona = ({
                                 alignItems: "center",
                                 justifyContent: "center",
                                 cursor: "pointer",
-                                fontSize: "0.9rem"
+                                fontSize: "0.9rem",
+                                fontWeight: isSelected ? "bold" : "normal"
                             }}
                         >
-                            {persona}
+                            {isSelected ? `✓ ${persona}` : persona}
                         </div>
                     )
                 })}

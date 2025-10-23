@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { supabase } from "../supabaseClient"
 import { capitalize } from "../utils/textUtils"
+import { showToast } from "./Toast"
 
 const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
     const [productos, setProductos] = useState([])
     const [filtro, setFiltro] = useState("")
+    const [feedbackButtons, setFeedbackButtons] = useState(new Set())
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -33,6 +35,29 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
             (prod.precio || "").toString().includes(filtro)
     )
 
+    const handleAgregarConFeedback = (producto) => {
+        if (!personaSeleccionada) {
+            showToast("⚠️ Selecciona una persona primero", "warning")
+            return
+        }
+        
+        // Agregar producto
+        agregarProducto(producto)
+        
+        // Feedback visual
+        setFeedbackButtons(prev => new Set([...prev, producto.id]))
+        showToast(`✓ ${capitalize(producto.nombre)} agregado a ${personaSeleccionada}`, "success")
+        
+        // Quitar feedback después de 1 segundo
+        setTimeout(() => {
+            setFeedbackButtons(prev => {
+                const newSet = new Set(prev)
+                newSet.delete(producto.id)
+                return newSet
+            })
+        }, 1000)
+    }
+
     return (
         <>
             <h2 style={{
@@ -43,7 +68,7 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
             }}>
                 ♦ Buscar Productos ♦
             </h2>
-            <div className="paper">
+            <div className={`paper ${!personaSeleccionada ? 'overlay-disabled' : ''}`}>
                 <input
                     className="input"
                     placeholder="Buscar producto o categoria"
@@ -91,19 +116,28 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                                 </p>
                             )}
 
-                            {personaSeleccionada && (
-                                <button
-                                    className="btn btn-text"
-                                    style={{
-                                        marginTop: "8px",
-                                        color: "hsla(8, 86%, 46%, 0.51)",
-                                        border: "1px solid black"
-                                    }}
-                                    onClick={() => agregarProducto(prod)}
-                                >
-                                    Agregar a {personaSeleccionada}
-                                </button>
-                            )}
+                            <button
+                                className={`btn btn-text ${
+                                    feedbackButtons.has(prod.id) ? 'btn-success-feedback' : ''
+                                }`}
+                                style={{
+                                    marginTop: "8px",
+                                    color: feedbackButtons.has(prod.id) ? "white" : "hsla(8, 86%, 46%, 0.51)",
+                                    border: "1px solid black",
+                                    cursor: !personaSeleccionada ? "not-allowed" : "pointer",
+                                    opacity: !personaSeleccionada ? 0.5 : 1
+                                }}
+                                onClick={() => handleAgregarConFeedback(prod)}
+                                disabled={!personaSeleccionada}
+                                title={!personaSeleccionada ? "Selecciona una persona primero" : ""}
+                            >
+                                {feedbackButtons.has(prod.id) 
+                                    ? `✓ Agregado` 
+                                    : personaSeleccionada 
+                                        ? `Agregar a ${personaSeleccionada}` 
+                                        : "Selecciona persona"
+                                }
+                            </button>
                         </div>
                     ))}
                 </div>
@@ -111,7 +145,13 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
                 <p style={{ marginTop: "16px", color: "#616161" }}>
                     No se encontraron productos que coincidan.
                 </p>
-            ) : null}
+            ) : (
+                !personaSeleccionada && (
+                    <div className="warning-message" style={{ marginTop: "16px" }}>
+                        🔍 Busca productos después de seleccionar una persona
+                    </div>
+                )
+            )}
             </div>
         </>
     )

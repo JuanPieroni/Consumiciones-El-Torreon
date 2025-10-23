@@ -7,13 +7,29 @@ import "./ListaProductosVanilla.css"
 const ListaProductosVanilla = React.memo(({ personaSeleccionada, agregarProducto }) => {
     const { productos } = useProductos()
     const [expanded, setExpanded] = React.useState(false)
+    const [feedbackCards, setFeedbackCards] = React.useState(new Set())
 
     const handleAgregar = (producto) => {
         if (!personaSeleccionada) {
-            showToast("Selecciona una persona antes de agregar productos", "warning")
+            showToast("⚠️ Selecciona una persona antes de agregar productos", "warning")
             return
         }
+        
+        // Agregar producto
         agregarProducto(producto)
+        
+        // Feedback visual
+        setFeedbackCards(prev => new Set([...prev, producto.id]))
+        showToast(`✓ ${capitalize(producto.nombre)} agregado a ${personaSeleccionada}`, "success")
+        
+        // Quitar feedback después de 800ms
+        setTimeout(() => {
+            setFeedbackCards(prev => {
+                const newSet = new Set(prev)
+                newSet.delete(producto.id)
+                return newSet
+            })
+        }, 800)
     }
 
     const productosPorCategoria = useMemo(() => {
@@ -46,6 +62,12 @@ const ListaProductosVanilla = React.memo(({ personaSeleccionada, agregarProducto
                 🍽️ CARTA 🍴
             </h2>
             
+            {!personaSeleccionada && (
+                <div className="warning-message">
+                    👆 Selecciona una persona arriba para agregar productos
+                </div>
+            )}
+            
             {Object.entries(productosPorCategoria).map(([categoria, subcategorias]) => (
                 <div key={categoria} className="categoria-accordion">
                     <button 
@@ -60,12 +82,19 @@ const ListaProductosVanilla = React.memo(({ personaSeleccionada, agregarProducto
                         <div className="categoria-content">
                             {/* Productos directos */}
                             {subcategorias.productos.length > 0 && (
-                                <div className="productos-grid">
+                                <div className={`productos-grid ${!personaSeleccionada ? 'overlay-disabled' : ''}`}>
                                     {subcategorias.productos.map((producto) => (
                                         <div
                                             key={producto.id}
-                                            className="producto-card"
+                                            className={`producto-card ${
+                                                feedbackCards.has(producto.id) ? 'card-added-feedback' : ''
+                                            }`}
                                             onClick={() => handleAgregar(producto)}
+                                            style={{
+                                                cursor: !personaSeleccionada ? 'not-allowed' : 'pointer',
+                                                position: 'relative'
+                                            }}
+                                            title={!personaSeleccionada ? "Selecciona una persona primero" : ""}
                                         >
                                             <div className="producto-nombre">{capitalize(producto.nombre)}</div>
                                             <div className="producto-precio">${producto.precio}</div>
@@ -80,12 +109,19 @@ const ListaProductosVanilla = React.memo(({ personaSeleccionada, agregarProducto
                                     <summary className="subcategoria-header">
                                         {capitalize(subcategoria)}
                                     </summary>
-                                    <div className="productos-grid">
+                                    <div className={`productos-grid ${!personaSeleccionada ? 'overlay-disabled' : ''}`}>
                                         {items.map((producto) => (
                                             <div
                                                 key={producto.id}
-                                                className="producto-card"
+                                                className={`producto-card ${
+                                                    feedbackCards.has(producto.id) ? 'card-added-feedback' : ''
+                                                }`}
                                                 onClick={() => handleAgregar(producto)}
+                                                style={{
+                                                    cursor: !personaSeleccionada ? 'not-allowed' : 'pointer',
+                                                    position: 'relative'
+                                                }}
+                                                title={!personaSeleccionada ? "Selecciona una persona primero" : ""}
                                             >
                                                 <div className="producto-nombre">{capitalize(producto.nombre)}</div>
                                                 <div className="producto-precio">${producto.precio}</div>
