@@ -46,7 +46,7 @@ const BuscarProducto = ({ personaSeleccionada, agregarProducto }) => {
         
         // Feedback visual
         setFeedbackButtons(prev => new Set([...prev, producto.id]))
-        showToast(`✓ ${capitalize(producto.nombre)} agregado a ${personaSeleccionada}`, "success")
+        showToast(`${capitalize(producto.nombre)} agregado a ${personaSeleccionada}`, "success")
         
         // Quitar feedback después de 1 segundo
         setTimeout(() => {

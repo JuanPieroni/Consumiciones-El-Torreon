@@ -20,7 +20,7 @@ const ListaProductosVanilla = React.memo(({ personaSeleccionada, agregarProducto
         
         // Feedback visual
         setFeedbackCards(prev => new Set([...prev, producto.id]))
-        showToast(`✓ ${capitalize(producto.nombre)} agregado a ${personaSeleccionada}`, "success")
+        showToast(`${capitalize(producto.nombre)} agregado a ${personaSeleccionada}`, "success")
         
         // Quitar feedback después de 800ms
         setTimeout(() => {
